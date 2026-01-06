@@ -40,7 +40,7 @@ export default function ProductFormPage() {
         className="bg-white p-6 rounded shadow w-full max-w-md"
       >
         <h1 className="text-xl font-bold mb-4">
-          {editingProduct ? "Ubah Produk" : "Tambah Produk"}
+          {editingProduct ? "Ubah" : "Tambah"}
         </h1>
 
         <input

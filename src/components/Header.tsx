@@ -5,7 +5,7 @@ type Props = {
   onToggleSidebar: () => void
 }
 
-export default function Header({ onToggleSidebar }: Props) {
+export default function Header({ onToggleSidebar }: Readonly<Props>) {
   const { logout } = useAuth()
   const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ export default function Header({ onToggleSidebar }: Props) {
         onClick={handleLogout}
         className="bg-white text-[#7B1E3A] font-bold text-center px-3 py-1 rounded hover:bg-gray-100"
       >
-        Logout
+        Keluar
       </button>
     </header>
   )

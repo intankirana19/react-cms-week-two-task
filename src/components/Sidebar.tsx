@@ -6,11 +6,7 @@ type Props = {
   onToggle: () => void
 }
 
-export default function Sidebar({
-  open,
-  onClose,
-  onToggle,
-}: Props) {
+export default function Sidebar({open, onClose, onToggle}: Readonly<Props>) {
   const navigate = useNavigate()
 
   if (!open) return null
@@ -41,11 +37,11 @@ export default function Sidebar({
 
 
         <div className="px-2 py-1 text-white/50 cursor-not-allowed">
-          Kategori
+          Menu 2
         </div>
 
         <div className="px-2 py-1 text-white/50 cursor-not-allowed">
-          Pengguna
+          Menu 3
         </div>
       </nav>
     </aside>

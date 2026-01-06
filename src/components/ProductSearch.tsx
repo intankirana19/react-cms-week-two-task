@@ -8,7 +8,7 @@ export default function ProductSearch({ value, onChange }: Props) {
     <input
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      placeholder="Search product..."
+      placeholder="Cari..."
       className="border p-2 w-64 rounded"
     />
   )

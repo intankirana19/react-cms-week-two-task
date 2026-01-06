@@ -40,19 +40,19 @@ export default function ProductFormPage() {
         className="bg-white p-6 rounded shadow w-full max-w-md"
       >
         <h1 className="text-xl font-bold mb-4">
-          {editingProduct ? "Edit Product" : "Add Product"}
+          {editingProduct ? "Ubah" : "Tambah"}
         </h1>
 
         <input
           {...register("name", { required: true })}
-          placeholder="Product name"
+          placeholder="Nama Produk"
           className="border p-2 w-full mb-3"
         />
 
         <input
           type="number"
           {...register("price", { required: true })}
-          placeholder="Price"
+          placeholder="Harga"
           className="border p-2 w-full mb-4"
         />
 
