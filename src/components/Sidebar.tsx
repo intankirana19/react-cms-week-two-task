@@ -26,7 +26,7 @@ export default function Sidebar({open, onClose, onToggle}: Readonly<Props>) {
       <nav className="p-4 space-y-2">
         <button
             type="button"
-            className="w-full text-left px-2 py-1 rounded hover:bg-[#9B2C4A]"
+            className="w-full text-left px-2 py-1 rounded hover:bg-[#9B2C4A] cursor-pointer"
             onClick={() => {
                 navigate("/products")
                 onClose()

@@ -27,7 +27,7 @@ export default function Header({ onToggleSidebar }: Readonly<Props>) {
 
       <button
         onClick={handleLogout}
-        className="bg-white text-[#7B1E3A] font-bold text-center px-3 py-1 rounded hover:bg-gray-100"
+        className="bg-white text-[#7B1E3A] font-bold text-center px-3 py-1 rounded hover:bg-gray-100 cursor-pointer"
       >
         Keluar
       </button>

@@ -56,7 +56,7 @@ export default function ProductFormPage() {
           className="border p-2 w-full mb-4"
         />
 
-        <button className="bg-[#7B1E3A] text-white px-4 py-2 rounded w-full">
+        <button className="bg-[#7B1E3A] cursor-pointer text-white px-4 py-2 rounded w-full">
           Simpan
         </button>
       </form>
