@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard"
 import Products from "../pages/Products"
 import ProductFormPage from "../pages/ProductFormPage"
 import { useAuth } from "../hooks/useAuth"
+import NotFound from "../pages/NotFound"
 
 function HomeRedirect() {
   const { isAuthenticated } = useAuth()
@@ -37,6 +38,8 @@ export default function AppRouter() {
                     element={<ProductFormPage />}
                 />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
