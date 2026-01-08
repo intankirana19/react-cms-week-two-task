@@ -1,26 +1,45 @@
 import { create } from "zustand"
+import { fetchProducts } from "../api/products"
+import type { Product } from "../types/product"
 
-export type Product = {
-  id: number
+type ProductInput = {
   name: string
-  price: number
+  price: string
 }
 
 type ProductState = {
   products: Product[]
-  addProduct: (product: Omit<Product, "id">) => void
-  updateProduct: (id: number, data: Omit<Product, "id">) => void
-  deleteProduct: (id: number) => void
+  isLoaded: boolean
+  loadProducts: () => Promise<void>
+  addProduct: (data: ProductInput) => void
+  updateProduct: (id: string, data: ProductInput) => void
+  deleteProduct: (id: string) => void
 }
 
-export const useProductStore = create<ProductState>((set) => ({
+export const useProductStore = create<ProductState>((set, get) => ({
   products: [],
+  isLoaded: false,
 
-  addProduct: (product) =>
+  loadProducts: async () => {
+    if (get().isLoaded) return
+
+    const apiProducts = await fetchProducts()
+
+    set({
+      products: apiProducts,
+      isLoaded: true,
+    })
+  },
+
+  addProduct: (data) =>
     set((state) => ({
       products: [
         ...state.products,
-        { id: Date.now(), ...product },
+        {
+          id: crypto.randomUUID(),
+          name: data.name,
+          price: data.price,
+        },
       ],
     })),
 

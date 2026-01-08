@@ -4,7 +4,7 @@ import { useProducts } from "../hooks/useProducts"
 
 type FormValues = {
   name: string
-  price: number
+  price: string
 }
 
 export default function ProductFormPage() {
@@ -13,13 +13,13 @@ export default function ProductFormPage() {
   const { products, addProduct, updateProduct } = useProducts()
 
   const editingProduct = products.find(
-    (p) => p.id === Number(id)
+    (p) => p.id === id
   )
 
   const { register, handleSubmit } = useForm<FormValues>({
     defaultValues: editingProduct ?? {
       name: "",
-      price: 0,
+      price: "0",
     },
   })
 
@@ -50,7 +50,6 @@ export default function ProductFormPage() {
         />
 
         <input
-          type="number"
           {...register("price", { required: true })}
           placeholder="Harga"
           className="border p-2 w-full mb-4"

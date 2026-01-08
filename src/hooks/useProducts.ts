@@ -5,11 +5,15 @@ export function useProducts() {
   const addProduct = useProductStore((s) => s.addProduct)
   const updateProduct = useProductStore((s) => s.updateProduct)
   const deleteProduct = useProductStore((s) => s.deleteProduct)
+  const loadProducts = useProductStore((s) => s.loadProducts)
+  const isLoaded = useProductStore((s) => s.isLoaded)
 
   return {
     products,
     addProduct,
     updateProduct,
     deleteProduct,
+    loadProducts,
+    isLoaded
   }
 }

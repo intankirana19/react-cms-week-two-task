@@ -3,7 +3,7 @@ import { useProducts } from "../hooks/useProducts"
 
 type ProductFormValues = {
   name: string
-  price: number
+  price: string
 }
 
 export default function ProductForm() {
@@ -18,7 +18,7 @@ export default function ProductForm() {
   function onSubmit(data: ProductFormValues) {
     addProduct({
       name: data.name,
-      price: Number(data.price),
+      price: data.price,
     })
     reset()
   }

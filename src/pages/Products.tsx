@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom"
 import { useProducts } from "../hooks/useProducts"
+import { useEffect } from "react"
 
 export default function Products() {
-  const { products, deleteProduct } = useProducts()
+  const { products, deleteProduct, loadProducts, isLoaded } = useProducts()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    loadProducts()
+  }, [loadProducts])
+
+  if(!isLoaded) return <div className="flex justify-center mt-12">Sedang memuat data...</div>
 
   return (
     <div>
@@ -40,13 +47,13 @@ export default function Products() {
                     onClick={() =>
                       navigate(`/products/${p.id}/edit`)
                     }
-                    className="text-blue-600"
+                    className="bg-white border-2 border-grey-50 text-grey-50 px-4 py-2 rounded cursor-pointer hover:bg-grey-100 hover:text-white"
                   >
                     Ubah
                   </button>
                   <button
                     onClick={() => deleteProduct(p.id)}
-                    className="text-red-600"
+                    className="bg-white border-2 border-[#7B1E3A] text-[#7B1E3A] px-4 py-2 rounded cursor-pointer hover:bg-[#7B1E3A] hover:text-white"
                   >
                     Hapus
                   </button>
