@@ -8,6 +8,7 @@ import Products from "../pages/Products"
 import ProductFormPage from "../pages/ProductFormPage"
 import { useAuth } from "../hooks/useAuth"
 import NotFound from "../pages/NotFound"
+import { Suspense } from "react"
 
 function HomeRedirect() {
   const { isAuthenticated } = useAuth()
@@ -31,7 +32,14 @@ export default function AppRouter() {
             }
             >
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/products" element={<Products />} />
+                <Route
+                  path="/products"
+                  element={
+                    <Suspense fallback={<div className="flex justify-center mt-12">Memuat...</div>}>
+                      <Products />
+                    </Suspense>
+                  }
+                />
                 <Route path="/products/new" element={<ProductFormPage />} />
                 <Route
                     path="/products/:id/edit"

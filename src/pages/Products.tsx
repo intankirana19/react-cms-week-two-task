@@ -1,32 +1,47 @@
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { useDebounce } from "../hooks/useDebounce"
+import ProductSearch from "../components/ProductSearch"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { fetchProducts } from "../api/products"
 import { useProducts } from "../hooks/useProducts"
-import { useEffect } from "react"
+import type { Product } from "../types/product"
 
 export default function Products() {
-  const { products, deleteProduct, loadProducts, isLoaded } = useProducts()
   const navigate = useNavigate()
+  const { deleteProduct } = useProducts()
 
-  useEffect(() => {
-    loadProducts()
-  }, [loadProducts])
+  const [search, setSearch] = useState("")
+  const debouncedSearch = useDebounce(search, 500)
 
-  if(!isLoaded) return <div className="flex justify-center mt-12">Sedang memuat data...</div>
+  const { data: products } = useSuspenseQuery<Product[]>({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  })
+
+  const filteredProducts = products.filter((p) =>
+    p.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+  )
 
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">Produk</h1>
 
-        <button
-          onClick={() => navigate("/products/new")}
-          className="bg-[#7B1E3A] text-white px-4 py-2 rounded"
-        >
-          + Tambah Produk
-        </button>
+        <div className="flex gap-2">
+          <ProductSearch value={search} onChange={setSearch} />
+
+          <button
+            onClick={() => navigate("/products/new")}
+            className="bg-[#7B1E3A] text-white px-4 py-2 rounded"
+          >
+            + Tambah Produk
+          </button>
+        </div>
       </div>
 
-      {products.length === 0 ? (
-        <p className="text-gray-500">Belum Ada Produk</p>
+      {filteredProducts.length === 0 ? (
+        <p className="text-gray-500">Tidak ada produk.</p>
       ) : (
         <table className="w-full bg-white rounded shadow">
           <thead>
@@ -38,22 +53,20 @@ export default function Products() {
           </thead>
 
           <tbody>
-            {products.map((p) => (
+            {filteredProducts.map((p) => (
               <tr key={p.id} className="border-b">
                 <td className="p-2">{p.name}</td>
                 <td className="p-2">{p.price}</td>
                 <td className="p-2 flex gap-2 justify-center">
                   <button
-                    onClick={() =>
-                      navigate(`/products/${p.id}/edit`)
-                    }
-                    className="bg-white border-2 border-grey-50 text-grey-50 px-4 py-2 rounded cursor-pointer hover:bg-grey-100 hover:text-white"
+                    onClick={() => navigate(`/products/${p.id}/edit`)}
+                    className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
                   >
                     Ubah
                   </button>
                   <button
                     onClick={() => deleteProduct(p.id)}
-                    className="bg-white border-2 border-[#7B1E3A] text-[#7B1E3A] px-4 py-2 rounded cursor-pointer hover:bg-[#7B1E3A] hover:text-white"
+                    className="bg-white border-2 border-[#7B1E3A] text-[#7B1E3A] px-4 py-2 rounded"
                   >
                     Hapus
                   </button>
