@@ -1,19 +1,62 @@
-import { useProductStore } from "../store/product.store"
+// import { useProductStore } from "../store/product.store"
+
+// export function useProducts() {
+//   const products = useProductStore((s) => s.products)
+//   const addProduct = useProductStore((s) => s.addProduct)
+//   const updateProduct = useProductStore((s) => s.updateProduct)
+//   const deleteProduct = useProductStore((s) => s.deleteProduct)
+//   const loadProducts = useProductStore((s) => s.loadProducts)
+//   const isLoaded = useProductStore((s) => s.isLoaded)
+
+//   return {
+//     products,
+//     addProduct,
+//     updateProduct,
+//     deleteProduct,
+//     loadProducts,
+//     isLoaded
+//   }
+// }
+
+import { useQueryClient } from "@tanstack/react-query"
+import type { Product } from "../types/product"
+
+type ProductInput = {
+  name: string
+  price: string
+}
 
 export function useProducts() {
-  const products = useProductStore((s) => s.products)
-  const addProduct = useProductStore((s) => s.addProduct)
-  const updateProduct = useProductStore((s) => s.updateProduct)
-  const deleteProduct = useProductStore((s) => s.deleteProduct)
-  const loadProducts = useProductStore((s) => s.loadProducts)
-  const isLoaded = useProductStore((s) => s.isLoaded)
+  const queryClient = useQueryClient()
+
+  function addProduct(data: ProductInput) {
+    queryClient.setQueryData<Product[]>(["products"], (old) => [
+      ...(old ?? []),
+      {
+        id: crypto.randomUUID(),
+        name: data.name,
+        price: data.price,
+      },
+    ])
+  }
+
+  function updateProduct(id: string, data: ProductInput) {
+    queryClient.setQueryData<Product[]>(["products"], (old) =>
+      old
+        ? old.map((p) => (p.id === id ? { ...p, ...data } : p))
+        : []
+    )
+  }
+
+  function deleteProduct(id: string) {
+    queryClient.setQueryData<Product[]>(["products"], (old) =>
+      old ? old.filter((p) => p.id !== id) : []
+    )
+  }
 
   return {
-    products,
     addProduct,
     updateProduct,
     deleteProduct,
-    loadProducts,
-    isLoaded
   }
 }

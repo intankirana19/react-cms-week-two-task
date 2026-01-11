@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { fetchProducts } from "../api/products"
 import { useProducts } from "../hooks/useProducts"
+import type { Product } from "../types/product"
 
 type FormValues = {
   name: string
@@ -10,11 +13,14 @@ type FormValues = {
 export default function ProductFormPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { products, addProduct, updateProduct } = useProducts()
+  const { addProduct, updateProduct } = useProducts()
 
-  const editingProduct = products.find(
-    (p) => p.id === id
-  )
+  const { data: products } = useSuspenseQuery<Product[]>({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  })
+
+  const editingProduct = products.find((p) => p.id === id)
 
   const { register, handleSubmit } = useForm<FormValues>({
     defaultValues: editingProduct ?? {
