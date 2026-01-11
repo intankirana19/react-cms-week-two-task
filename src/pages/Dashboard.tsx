@@ -1,7 +1,12 @@
-import { useProducts } from "../hooks/useProducts"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { fetchProducts } from "../api/products"
+import type { Product } from "../types/product"
 
 export default function Dashboard() {
-  const { products } = useProducts()
+  const { data: products } = useSuspenseQuery<Product[]>({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  })
 
   return (
     <>
