@@ -3,9 +3,10 @@ import { useState } from "react"
 import { useDebounce } from "../hooks/useDebounce"
 import ProductSearch from "../components/ProductSearch"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { fetchProducts } from "../api/products"
+// import { fetchProducts } from "../api/products"
 import { useProducts } from "../hooks/useProducts"
 import type { Product } from "../types/product"
+import { productService } from "../api/services"
 
 export default function Products() {
   const navigate = useNavigate()
@@ -16,7 +17,8 @@ export default function Products() {
 
   const { data: products } = useSuspenseQuery<Product[]>({
     queryKey: ["products"],
-    queryFn: fetchProducts,
+    queryFn: () => productService.getList(),
+    // queryFn: fetchProducts,
   })
 
   const filteredProducts = products.filter((p) =>
