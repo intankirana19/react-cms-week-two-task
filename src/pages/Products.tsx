@@ -7,6 +7,7 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import { useProducts } from "../hooks/useProducts"
 import type { Product } from "../types/product"
 import { productService } from "../api/services"
+import { useErrorBoundary } from "react-error-boundary"
 
 export default function Products() {
   const navigate = useNavigate()
@@ -15,11 +16,17 @@ export default function Products() {
   const [search, setSearch] = useState("")
   const debouncedSearch = useDebounce(search, 500)
 
-  const { data: products } = useSuspenseQuery<Product[]>({
+  const { showBoundary } = useErrorBoundary();
+  const { data: products, isError, error } = useSuspenseQuery<Product[]>({
     queryKey: ["products"],
     queryFn: () => productService.getList(),
     // queryFn: fetchProducts,
   })
+
+  if(isError) {
+    showBoundary(error)
+    return null
+  }
 
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(debouncedSearch.toLowerCase())
@@ -61,7 +68,7 @@ export default function Products() {
                 <td className="p-2">{p.price}</td>
                 <td className="p-2 flex gap-2 justify-center">
                   <button
-                    onClick={() => navigate(`/products/${p.id}/edit`)}
+                    onClick={() => navigate(`/products/edit/${p.id}`)}
                     className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
                   >
                     Ubah
