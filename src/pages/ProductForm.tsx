@@ -10,7 +10,7 @@ type FormValues = {
   price: string
 }
 
-export default function ProductFormPage() {
+export default function ProductForm() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addProduct, updateProduct } = useProducts()
