@@ -1,6 +1,6 @@
 // import { PRODUCT_API } from "../../constants/constants";
 import { apiClient } from "../../lib/axios";
-import { PRODUCT_ROUTES } from "../constants";
+import { PRODUCT_ROUTES } from "../constants/routes";
 import type { Product } from "../schemas/product.schema";
 
 export const productService = {

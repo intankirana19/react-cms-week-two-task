@@ -6,8 +6,8 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 // import { fetchProducts } from "../api/products"
 import { useProducts } from "../hooks/useProducts"
 import type { Product } from "../types/product"
-import { productService } from "../api/services"
 import { useErrorBoundary } from "react-error-boundary"
+import { productService } from "../api/services/product.service"
 
 export default function Products() {
   const navigate = useNavigate()

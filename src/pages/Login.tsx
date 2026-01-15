@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 import { useForm } from "react-hook-form"
+import { authInputSchema, type AuthInput } from "../api/schemas/auth.schema"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-type LoginForm = {
-  email: string
-  password: string
-}
+// type LoginForm = {
+//   email: string
+//   password: string
+// }
 
 export default function Login() {
   const { login } = useAuth()
@@ -15,7 +17,9 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>()
+  } = useForm<AuthInput>({
+    resolver: zodResolver(authInputSchema)
+  })
 
   function onSubmit() {
     login()
@@ -34,7 +38,7 @@ export default function Login() {
 
         <div>
           <input
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
             placeholder="Email"
             className="border p-2 w-full"
           />
@@ -48,7 +52,7 @@ export default function Login() {
         <div>
           <input
             type="password"
-            {...register("password", { required: "Password is required" })}
+            {...register("password")}
             placeholder="Password"
             className="border p-2 w-full"
           />

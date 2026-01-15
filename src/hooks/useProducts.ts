@@ -20,11 +20,12 @@
 
 import { useQueryClient } from "@tanstack/react-query"
 import type { Product } from "../types/product"
+import type { ProductInput } from "../api/schemas/product.schema"
 
-type ProductInput = {
-  name: string
-  price: string
-}
+// type ProductInput = {
+//   name: string
+//   price: string
+// }
 
 export function useProducts() {
   const queryClient = useQueryClient()
@@ -35,7 +36,7 @@ export function useProducts() {
       {
         id: crypto.randomUUID(),
         name: data.name,
-        price: data.price,
+        price: String(data.price),
       },
     ])
   }
@@ -43,7 +44,7 @@ export function useProducts() {
   function updateProduct(id: string, data: ProductInput) {
     queryClient.setQueryData<Product[]>(["products"], (old) =>
       old
-        ? old.map((p) => (p.id === id ? { ...p, ...data } : p))
+        ? old.map((p) => (p.id === id ? { ...p, ...data, price: String(data.price) } : p))
         : []
     )
   }

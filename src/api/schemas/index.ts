@@ -1,1 +1,0 @@
-export {productSchema} from './product.schema';
