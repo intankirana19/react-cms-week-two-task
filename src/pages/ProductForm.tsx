@@ -28,10 +28,10 @@ export default function ProductForm() {
     resolver: zodResolver(productInputSchema),
     defaultValues: editingProduct ?  {
       name: editingProduct.name,
-      price: Number(editingProduct.price),
+      price: editingProduct.price,
     }: {
       name: "",
-      price: 0,
+      price: "",
     },
   })
 
@@ -75,7 +75,7 @@ export default function ProductForm() {
         <input
           {...register("name")}
           placeholder="Nama Produk"
-          className="border p-2 w-full mb-3"
+          className="border p-2 w-full"
         />
         {errors.name && 
             <p className="text-sm text-red-600 mt-1">
@@ -86,8 +86,10 @@ export default function ProductForm() {
         <input
           {...register("price")}
           type="number"
+          step="any"
+          inputMode="decimal"
           placeholder="Harga"
-          className="border p-2 w-full mb-4"
+          className="border p-2 w-full mt-3"
         />
         {errors.price && 
           <p className="text-sm text-red-600 mt-1">
@@ -95,7 +97,7 @@ export default function ProductForm() {
           </p>
         }
 
-        <button className="bg-[#7B1E3A] cursor-pointer text-white px-4 py-2 rounded w-full">
+        <button className="bg-[#7B1E3A] cursor-pointer text-white px-4 py-2 mt-4 rounded w-full">
           Simpan
         </button>
       </form>
