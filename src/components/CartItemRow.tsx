@@ -17,7 +17,7 @@ export function CartItemRow({ item }: Readonly<{ item: CartItem }>) {
         <button onClick={() => updateQty(item.id, item.quantity - 1)}>-</button>
         <span>{item.quantity}</span>
         <button onClick={() => updateQty(item.id, item.quantity + 1)}>+</button>
-        <button onClick={() => removeItem(item.id)}>🗑</button>
+        <button onClick={() => removeItem(item.id)}>Hapus</button>
       </div>
     </div>
   )

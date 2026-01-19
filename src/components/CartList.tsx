@@ -4,7 +4,7 @@ import { CartItemRow } from "./CartItemRow"
 export function CartList() {
   const items = useCartStore((s) => s.items)
 
-  if (!items.length) return <p>Cart kosong</p>
+  if (!items.length) return <p>Keranjang kosong</p>
 
   return (
     <div className="space-y-3">
