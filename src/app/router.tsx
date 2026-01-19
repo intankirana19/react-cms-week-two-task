@@ -21,7 +21,7 @@ const ProductFormPage = lazy(() => import('../pages/ProductForm'));
 // }
 
 function LoadingFallback() {
-  return (<div className="flex justify-center mt-12">Memuat...</div>)
+  return (<div className="flex justify-center mt-12 text-5xl font-bold">Memuat...</div>)
 }
 
 export default function AppRouter() {
