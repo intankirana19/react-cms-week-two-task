@@ -12,6 +12,7 @@ import { lazy, Suspense, type ElementType } from "react"
 const DashboardPage = lazy(() => import('../pages/Dashboard'));
 const ProductPage = lazy(() => import('../pages/Products'));
 const ProductFormPage = lazy(() => import('../pages/ProductForm'));
+const CheckoutPage = lazy(() => import('../pages/Checkout'));
 
 // function HomeRedirect() {
 //   const { isAuthenticated } = useAuth()
@@ -35,6 +36,7 @@ export default function AppRouter() {
     {path: '/products', Component: ProductPage},
     {path: '/products/new', Component: ProductFormPage},
     {path: '/products/edit/:id', Component: ProductFormPage},
+    {path: '/checkout', Component: CheckoutPage},
   ]
 
   return (

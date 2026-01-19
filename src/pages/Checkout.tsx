@@ -1,0 +1,37 @@
+import { useNavigate } from "react-router-dom"
+import { useCallback } from "react"
+import { useCartStore } from "../store/cart.store"
+import { CartList } from "../components/CartList"
+import { CartSummary } from "../components/CartSummary"
+
+export default function CheckoutPage() {
+  const items = useCartStore((s) => s.items)
+  const clear = useCartStore((s) => s.clear)
+  const navigate = useNavigate()
+
+  const handleSubmit = useCallback(() => {
+    alert("Pembayaran berhasil!")
+    clear()
+    navigate("/products")
+  }, [clear, navigate])
+
+  if (!items.length) {
+    return <p>Keranjang kosong</p>
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-6">
+      <h1 className="text-2xl font-bold">Checkout</h1>
+
+      <CartList />
+      <CartSummary />
+
+      <button
+        onClick={handleSubmit}
+        className="bg-[#7B1E3A] text-white px-6 py-3 rounded"
+      >
+        Bayar Sekarang
+      </button>
+    </div>
+  )
+}
