@@ -9,7 +9,7 @@ export function CartItemRow({ item }: Readonly<{ item: CartItem }>) {
   return (
     <div className="flex items-center justify-between border-b pb-2">
       <div>
-        <p className="font-medium">{item.title}</p>
+        <p className="font-medium">{item.name}</p>
         <p className="text-sm">Rp {item.price}</p>
       </div>
 

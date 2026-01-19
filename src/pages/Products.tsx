@@ -8,6 +8,7 @@ import { useProducts } from "../hooks/useProducts"
 import type { Product } from "../types/product"
 import { useErrorBoundary } from "react-error-boundary"
 import { productService } from "../api/services/product.service"
+import { AddToCartButton } from "../components/AddToCartButton"
 
 export default function Products() {
   const navigate = useNavigate()
@@ -67,6 +68,7 @@ export default function Products() {
                 <td className="p-2">{p.name}</td>
                 <td className="p-2">{p.price}</td>
                 <td className="p-2 flex gap-2 justify-center">
+                  <AddToCartButton product={p} />
                   <button
                     onClick={() => navigate(`/products/edit/${p.id}`)}
                     className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
