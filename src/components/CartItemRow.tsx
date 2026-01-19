@@ -13,7 +13,7 @@ export const CartItemRow = memo(function CartItemRow({ item }: { item: CartItem 
     <div className="flex items-center justify-between border-b pb-2">
       <div>
         <p className="font-medium">{item.name}</p>
-        <p className="text-sm">Rp {item.price}</p>
+        <p className="text-sm">{item.price}</p>
       </div>
 
       <div className="flex items-center gap-2">
