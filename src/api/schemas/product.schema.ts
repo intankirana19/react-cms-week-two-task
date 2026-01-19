@@ -21,6 +21,6 @@ export const productInputSchema = z.object({
             .string()
             .min(1, 'Harga wajib diisi')
             .refine((val) => !Number.isNaN(Number(val)), 'Harga harus berupa angka')
-            .refine((val) => Number(val) < 0, 'Harga harus lebih dari 0')
+            .refine((val) => Number(val) > 0, 'Harga harus lebih dari 0')
 });
 export type ProductInput = z.infer<typeof productInputSchema>
