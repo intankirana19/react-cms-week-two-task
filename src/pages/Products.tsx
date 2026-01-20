@@ -68,7 +68,6 @@ export default function Products() {
                 <td className="p-2">{p.name}</td>
                 <td className="p-2">{p.price}</td>
                 <td className="p-2 flex gap-2 justify-center">
-                  <AddToCartButton product={p} />
                   <button
                     onClick={() => navigate(`/products/edit/${p.id}`)}
                     className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
@@ -81,6 +80,9 @@ export default function Products() {
                   >
                     Hapus
                   </button>
+                  <div className="w-28">
+                    <AddToCartButton product={p} />
+                  </div>
                 </td>
               </tr>
             ))}

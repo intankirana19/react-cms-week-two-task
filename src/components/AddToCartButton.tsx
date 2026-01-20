@@ -26,7 +26,7 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
     return (
       <button
         onClick={handleAdd}
-        className="bg-[#7B1E3A] text-white px-3 py-1 rounded"
+        className="bg-[#7B1E3A] text-white px-3 py-1 rounded w-full h-full"
       >
         Add to Cart
       </button>
@@ -35,7 +35,7 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex justify-center items-center gap-2 w-full h-full">
         <button onClick={handleMinus} className="border px-2 rounded">-</button>
         <span>{cartItem.quantity}</span>
         <button onClick={handlePlus} className="border px-2 rounded">+</button>
