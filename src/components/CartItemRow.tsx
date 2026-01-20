@@ -9,11 +9,11 @@ export const CartItemRow = memo(function CartItemRow({ item }: { item: CartItem 
 
   const [confirmOpen, setConfirmOpen] = useState(false)
 
-  const inc = useCallback(() => updateQty(item.id, item.quantity + 1), [item, updateQty])
+  const inc = useCallback(() => updateQty(item.id, item.quantity + 1), [item.id, item.quantity, updateQty])
   const dec = useCallback(() => {
       if (item.quantity === 1) setConfirmOpen(true)
       else updateQty(item.id, item.quantity - 1)
-  }, [item, updateQty])
+  }, [item.id, item.quantity, updateQty])
 
   return (
     <>
