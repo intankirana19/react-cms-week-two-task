@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 type AuthState = {
   isAuthenticated: boolean
@@ -6,8 +7,15 @@ type AuthState = {
   logout: () => void
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: false,
-  login: () => set({ isAuthenticated: true }),
-  logout: () => set({ isAuthenticated: false }),
-}))
+export const useAuthStore = create<AuthState>()(
+  persist( // pakai persist utk simpan ke localstorage,kalau udh ada api?
+    (set) => ({
+      isAuthenticated: false,
+      login: () => set({ isAuthenticated: true }),
+      logout: () => set({ isAuthenticated: false }),
+    }),
+    {
+      name: "auth-storage",
+    }
+  )
+)

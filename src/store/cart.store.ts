@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 import type { CartItem } from "../types/cart"
 
 type CartStore = {
@@ -9,29 +10,36 @@ type CartStore = {
   clear: () => void
 }
 
-export const useCartStore = create<CartStore>((set) => ({
-  items: [],
+export const useCartStore = create<CartStore>()(
+  persist( // pakai persist utk simpan ke localstorage,kalau udh ada api?
+    (set) => ({
+      items: [],
 
-  addItem: (item) =>
-    set((state) => ({
-      items: state.items.some((i) => i.id === item.id)
-        ? state.items.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-          )
-        : [...state.items, { ...item, quantity: 1 }],
-    })),
+      addItem: (item) =>
+        set((state) => ({
+          items: state.items.some((i) => i.id === item.id)
+            ? state.items.map((i) =>
+                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+              )
+            : [...state.items, { ...item, quantity: 1 }],
+        })),
 
-  removeItem: (id) =>
-    set((state) => ({
-      items: state.items.filter((i) => i.id !== id),
-    })),
+      removeItem: (id) =>
+        set((state) => ({
+          items: state.items.filter((i) => i.id !== id),
+        })),
 
-  updateQty: (id, qty) =>
-    set((state) => ({
-      items: state.items.map((i) =>
-        i.id === id ? { ...i, quantity: Math.max(1, qty) } : i
-      ),
-    })),
+      updateQty: (id, qty) =>
+        set((state) => ({
+          items: state.items.map((i) =>
+            i.id === id ? { ...i, quantity: Math.max(1, qty) } : i
+          ),
+        })),
 
-  clear: () => set({ items: [] }),
-}))
+      clear: () => set({ items: [] }),
+    }),
+    {
+      name: "cart-storage",
+    }
+  )
+)
