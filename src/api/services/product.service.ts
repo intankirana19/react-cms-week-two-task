@@ -1,5 +1,5 @@
 // import { PRODUCT_API } from "../../constants/constants";
-import { apiClient } from "../../lib/axios";
+import { apiClient } from "../../shared/lib/axios";
 import { PRODUCT_ROUTES } from "../constants/routes";
 import type { Product } from "../schemas/product.schema";
 

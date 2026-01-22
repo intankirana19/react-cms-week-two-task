@@ -1,6 +1,6 @@
 import { create } from "zustand"
-import { fetchProducts } from "../api/products"
-import type { Product } from "../types/product"
+import { fetchProducts } from "../../../api/products"
+import type { ProductType } from "../types/product"
 
 type ProductInput = {
   name: string
@@ -8,7 +8,7 @@ type ProductInput = {
 }
 
 type ProductState = {
-  products: Product[]
+  products: ProductType[]
   isLoaded: boolean
   loadProducts: () => Promise<void>
   addProduct: (data: ProductInput) => void

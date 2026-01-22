@@ -1,7 +1,7 @@
 import { memo, useCallback, useState } from "react"
-import type { CartItem } from "../types/cart"
-import { useCartStore } from "../store/cart.store"
-import { ConfirmRemoveDialog } from "./ConfirmRemoveDialog"
+import type { CartItem } from "../../../shared/types/cart"
+import { useCartStore } from "../stores/cart.store"
+import { ConfirmRemoveDialog } from "../../../oldComponents/ConfirmRemoveDialog"
 
 export const CartItemRow = memo(function CartItemRow({ item }: { item: CartItem }) {
   const updateQty = useCartStore((s) => s.updateQty)

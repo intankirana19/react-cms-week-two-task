@@ -1,4 +1,4 @@
-import { useCartStore } from "../store/cart.store"
+import { useCartStore } from "../stores/cart.store"
 import { CartItemRow } from "./CartItemRow"
 
 export function CartList() {

@@ -1,9 +1,9 @@
 import { memo, useCallback, useState } from "react"
-import type { Product } from "../types/product"
-import { useCartStore } from "../store/cart.store"
-import { ConfirmRemoveDialog } from "./ConfirmRemoveDialog"
+import { ConfirmRemoveDialog } from "../../../oldComponents/ConfirmRemoveDialog"
+import type { ProductType } from "../../product/types/product"
+import { useCartStore } from "../stores/cart.store"
 
-export const AddToCartButton = memo(function AddToCartButton({ product }: { product: Product }) {
+export const AddToCartButton = memo(function AddToCartButton({ product }: { product: ProductType }) {
   const { items, addItem, updateQty, removeItem } = useCartStore()
   const [confirmOpen, setConfirmOpen] = useState(false)
 

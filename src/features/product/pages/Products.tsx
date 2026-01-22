@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { useDebounce } from "../hooks/useDebounce"
-import ProductSearch from "../components/ProductSearch"
+import { useDebounce } from "../../../shared/hooks/useDebounce"
+import ProductSearch from "../../../oldComponents/ProductSearch"
 import { useSuspenseQuery } from "@tanstack/react-query"
 // import { fetchProducts } from "../api/products"
-import { useProducts } from "../hooks/useProducts"
-import type { Product } from "../types/product"
 import { useErrorBoundary } from "react-error-boundary"
-import { productService } from "../api/services/product.service"
-import { AddToCartButton } from "../components/AddToCartButton"
+import { productService } from "../../../api/services/product.service"
+import { AddToCartButton } from "../../cart/components/AddToCartButton"
+import { useProducts } from "../hooks/useProducts"
+import type { ProductType } from "../types/product"
 
 export default function Products() {
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ export default function Products() {
   const debouncedSearch = useDebounce(search, 500)
 
   const { showBoundary } = useErrorBoundary();
-  const { data: products, isError, error } = useSuspenseQuery<Product[]>({
+  const { data: products, isError, error } = useSuspenseQuery<ProductType[]>({
     queryKey: ["products"],
     queryFn: () => productService.getList(),
     // queryFn: fetchProducts,

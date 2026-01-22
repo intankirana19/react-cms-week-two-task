@@ -19,8 +19,8 @@
 // }
 
 import { useQueryClient } from "@tanstack/react-query"
-import type { Product } from "../types/product"
-import type { ProductInput } from "../api/schemas/product.schema"
+import type { ProductInputSchemaType } from "../../../api/schemas/product.schema"
+import type { ProductType } from "../types/product"
 
 // type ProductInput = {
 //   name: string
@@ -30,8 +30,8 @@ import type { ProductInput } from "../api/schemas/product.schema"
 export function useProducts() {
   const queryClient = useQueryClient()
 
-  function addProduct(data: ProductInput) {
-    queryClient.setQueryData<Product[]>(["products"], (old) => [
+  function addProduct(data: ProductInputSchemaType) {
+    queryClient.setQueryData<ProductType[]>(["products"], (old) => [
       ...(old ?? []),
       {
         id: crypto.randomUUID(),
@@ -41,8 +41,8 @@ export function useProducts() {
     ])
   }
 
-  function updateProduct(id: string, data: ProductInput) {
-    queryClient.setQueryData<Product[]>(["products"], (old) =>
+  function updateProduct(id: string, data: ProductInputSchemaType) {
+    queryClient.setQueryData<ProductType[]>(["products"], (old) =>
       old
         ? old.map((p) => (p.id === id ? { ...p, ...data, price: String(data.price) } : p))
         : []
@@ -50,7 +50,7 @@ export function useProducts() {
   }
 
   function deleteProduct(id: string) {
-    queryClient.setQueryData<Product[]>(["products"], (old) =>
+    queryClient.setQueryData<ProductType[]>(["products"], (old) =>
       old ? old.filter((p) => p.id !== id) : []
     )
   }

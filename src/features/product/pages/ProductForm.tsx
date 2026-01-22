@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { fetchProducts } from "../api/products"
-import { useProducts } from "../hooks/useProducts"
-import type { Product } from "../types/product"
+import { fetchProducts } from "../../../api/products"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { productInputSchema, type ProductInput } from "../api/schemas/product.schema"
+import { productInputSchema, type ProductInputSchemaType } from "../../../api/schemas/product.schema"
+import { useProducts } from "../hooks/useProducts"
+import type { ProductType } from "../types/product"
 
 // type FormValues = {
 //   name: string
@@ -17,14 +17,14 @@ export default function ProductForm() {
   const navigate = useNavigate()
   const { addProduct, updateProduct } = useProducts()
 
-  const { data: products } = useSuspenseQuery<Product[]>({
+  const { data: products } = useSuspenseQuery<ProductType[]>({
     queryKey: ["products"],
     queryFn: fetchProducts,
   })
 
   const editingProduct = products.find((p) => p.id === id)
 
-  const { register, handleSubmit, formState: { errors }  } = useForm<ProductInput>({
+  const { register, handleSubmit, formState: { errors }  } = useForm<ProductInputSchemaType>({
     resolver: zodResolver(productInputSchema),
     defaultValues: editingProduct ?  {
       name: editingProduct.name,
@@ -35,7 +35,7 @@ export default function ProductForm() {
     },
   })
 
-  function onSubmit( data: ProductInput) {
+  function onSubmit( data: ProductInputSchemaType) {
     if (editingProduct) {
       updateProduct(editingProduct.id, data)
     } else {

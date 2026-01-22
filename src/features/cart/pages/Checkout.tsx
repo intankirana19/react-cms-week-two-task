@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { useCallback } from "react"
-import { useCartStore } from "../store/cart.store"
 import { CartList } from "../components/CartList"
 import { CartSummary } from "../components/CartSummary"
+import { useCartStore } from "../stores/cart.store"
 
 export default function CheckoutPage() {
   const items = useCartStore((s) => s.items)

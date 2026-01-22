@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../hooks/useAuth"
 import { useForm } from "react-hook-form"
-import { authInputSchema, type AuthInput } from "../api/schemas/auth.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useAuth } from "../hooks/useAuth"
+import { authInputSchema, type AuthInputSchemaType } from "../../../api/schemas/auth.schema"
 
 // type LoginForm = {
 //   email: string
@@ -17,7 +17,7 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthInput>({
+  } = useForm<AuthInputSchemaType>({
     resolver: zodResolver(authInputSchema)
   })
 

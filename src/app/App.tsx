@@ -1,7 +1,9 @@
+// change folder structure based on khatulistiwa-fe-core repo & https://medium.com/@tejasvinavale1599/the-best-folder-structure-for-scalable-react-apps-in-2025-enterprise-recommended-4fa755b8f0c7
+
 import { QueryClientProvider, QueryErrorResetBoundary } from "@tanstack/react-query";
-import { queryClient } from "./lib/queryClient";
+import { queryClient } from "../shared/lib/queryClient";
 import { BrowserRouter } from "react-router-dom";
-import AppRouter from "./app/router";
+import AppRouter from "./router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import type { ErrorInfo } from "react";

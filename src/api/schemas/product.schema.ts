@@ -23,4 +23,4 @@ export const productInputSchema = z.object({
             .refine((val) => !Number.isNaN(Number(val)), 'Harga harus berupa angka')
             .refine((val) => Number(val) > 0, 'Harga harus lebih dari 0')
 });
-export type ProductInput = z.infer<typeof productInputSchema>
+export type ProductInputSchemaType = z.infer<typeof productInputSchema>

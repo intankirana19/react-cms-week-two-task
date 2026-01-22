@@ -1,18 +1,14 @@
 import { Routes, Route } from "react-router-dom"
-import ProtectedRoute from "../components/ProtectedRoute"
 import MainLayout from "../layouts/MainLayout"
-
-import Login from "../pages/Login"
-// import Dashboard from "../pages/Dashboard"
-// import Products from "../pages/Products"
-// import { useAuth } from "../hooks/useAuth"
-import NotFound from "../pages/NotFound"
+import NotFound from "../shared/pages/NotFound"
 import { lazy, Suspense, type ElementType } from "react"
+import Login from "../features/auth/pages/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
-const DashboardPage = lazy(() => import('../pages/Dashboard'));
-const ProductPage = lazy(() => import('../pages/Products'));
-const ProductFormPage = lazy(() => import('../pages/ProductForm'));
-const CheckoutPage = lazy(() => import('../pages/Checkout'));
+const DashboardPage = lazy(() => import('../features/dashboard/pages/Dashboard'));
+const ProductPage = lazy(() => import('../features/product/pages/Products'));
+const ProductFormPage = lazy(() => import('../features/product/pages/ProductForm'));
+const CheckoutPage = lazy(() => import('../features/cart/pages/Checkout'));
 
 // function HomeRedirect() {
 //   const { isAuthenticated } = useAuth()

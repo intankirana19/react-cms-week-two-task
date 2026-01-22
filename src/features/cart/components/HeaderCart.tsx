@@ -1,6 +1,6 @@
 import { memo } from "react"
 import { Link } from "react-router-dom"
-import { useCartStore } from "../store/cart.store"
+import { useCartStore } from "../stores/cart.store"
 
 export const HeaderCart = memo(function HeaderCart() {
   const count = useCartStore((s) =>

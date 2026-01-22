@@ -1,6 +1,6 @@
-import { useAuth } from "../hooks/useAuth"
+import { HeaderCart } from "../features/cart/components/HeaderCart"
+import { useAuth } from "../features/auth/hooks/useAuth"
 import { useNavigate } from "react-router-dom"
-import { HeaderCart } from "./HeaderCart"
 
 type Props = {
   onToggleSidebar: () => void

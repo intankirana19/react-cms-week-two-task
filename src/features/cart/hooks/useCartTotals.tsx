@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useCartStore } from "../store/cart.store"
+import { useCartStore } from "../stores/cart.store"
 
 export function useCartTotals() {
   const items = useCartStore((s) => s.items)

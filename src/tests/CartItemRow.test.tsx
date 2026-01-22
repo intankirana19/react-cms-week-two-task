@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { CartItemRow } from "../components/CartItemRow"
+import { CartItemRow } from "../features/cart/components/CartItemRow"
 
 const mockItem = {
   id: "1",
