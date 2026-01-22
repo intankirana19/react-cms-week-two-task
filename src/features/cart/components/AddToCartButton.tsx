@@ -1,11 +1,14 @@
 import { memo, useCallback, useState } from "react"
-import { ConfirmRemoveDialog } from "../../../oldComponents/ConfirmRemoveDialog"
+// import { ConfirmRemoveDialog } from "../../../oldComponents/ConfirmRemoveDialog"
 import type { ProductType } from "../../product/types/product"
 import { useCartStore } from "../stores/cart.store"
+import { RemoveFromCartConfirmationDialog } from "./RemoveFromCartConfirmationDialog"
 
 export const AddToCartButton = memo(function AddToCartButton({ product }: { product: ProductType }) {
   const { items, addItem, updateQty, removeItem } = useCartStore()
-  const [confirmOpen, setConfirmOpen] = useState(false)
+
+  // const [confirmOpen, setConfirmOpen] = useState(false)
+  const [openRemoveFromCartDialog, setOpenRemoveFromCartDialog] = useState(false);
 
   const cartItem = items.find((i) => i.id === product.id)
 
@@ -18,7 +21,7 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
   }, [updateQty, cartItem, product])
 
   const handleMinus = useCallback(() => {
-    if (cartItem?.quantity === 1) setConfirmOpen(true)
+    if (cartItem?.quantity === 1) setOpenRemoveFromCartDialog(true)
     else updateQty(product.id, cartItem!.quantity - 1)
   }, [cartItem, updateQty, product])
 
@@ -41,14 +44,24 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
         <button onClick={handlePlus} className="border px-2 rounded">+</button>
       </div>
 
-      <ConfirmRemoveDialog
+      <RemoveFromCartConfirmationDialog
+        open={openRemoveFromCartDialog}
+        onOpenChange={setOpenRemoveFromCartDialog}
+        product={product}
+        onConfirm={() => {
+          removeItem(product.id)
+          setOpenRemoveFromCartDialog(false)
+        }}
+      />
+
+      {/* <ConfirmRemoveDialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() => {
           removeItem(product.id)
           setConfirmOpen(false)
         }}
-      />
+      /> */}
     </>
   )
 })
