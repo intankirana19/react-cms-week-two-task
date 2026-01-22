@@ -9,7 +9,7 @@ export const productSchema = z.object({
     price: z.string(),
     id: z.string(),
 });
-export type Product = z.infer<typeof productSchema>
+export type ProductSchemaType = z.infer<typeof productSchema>
 
 export const productInputSchema = z.object({
     createdAt: z.string().optional(),
