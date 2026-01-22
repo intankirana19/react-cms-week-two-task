@@ -1,8 +1,44 @@
 @import "tailwindcss";
 
-/* dikhatulistiwa adayg pakai oklch, why? figma udh supportkah? */
+/* dikhatulistiwa theme pakai oklch, figma udh supportkah? semua monitor dll support kah?*/
 /* https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl */
+/* https://oklch.com/#0.7,0.1,211,100 */
 
+:root {
+  font-family:
+    'Roboto',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+@theme {
+  --color-primary-100: oklch(0.4714 0.1471 8.77);
+  --color-primary-200: oklch(0.3956 0.128 7.39);
+  --color-primary-300: oklch(0.32 0.128 7.39);
+
+  --color-secondary-100: oklch(0.4062 0 7.39);
+  --color-secondary-200: oklch(0.3049 0 7.39);
+  --color-secondary-300: oklch(0.2127 0 7.39);
+
+  --color-danger-25: oklch(0.985 0.01 25);
+  --color-danger-50: oklch(0.965 0.025 25);
+  --color-danger-100: oklch(0.93 0.055 25);
+  --color-danger-200: oklch(0.85 0.09 28);
+  --color-danger-300: oklch(0.72 0.14 30);
+  --color-danger-400: oklch(0.58 0.17 30);
+  --color-danger-500: oklch(0.449 0.19 29);
+  --color-danger-600: oklch(0.38 0.16 28);
+  --color-danger-700: oklch(0.32 0.13 27);
+  --color-danger-800: oklch(0.26 0.1 26);
+  --color-danger-900: oklch(0.2 0.08 25);
+
+  --color-black: oklch(0 0 0);
+  --color-white: oklch(1 0 0);
+  --color-disabled: oklch(0.417 0.113 244);
+}
+
+/* react default css */
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
