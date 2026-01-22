@@ -1,12 +1,19 @@
 // change folder structure based on khatulistiwa-fe-core repo & https://medium.com/@tejasvinavale1599/the-best-folder-structure-for-scalable-react-apps-in-2025-enterprise-recommended-4fa755b8f0c7
 
-import { QueryClientProvider, QueryErrorResetBoundary } from "@tanstack/react-query";
-import { queryClient } from "../shared/lib/queryClient";
-import { BrowserRouter } from "react-router-dom";
-import AppRouter from "./router";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
-import type { ErrorInfo } from "react";
+import { QueryErrorResetBoundary } from "@tanstack/react-query"
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client"
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister"
+import { queryClient } from "../shared/lib/queryClient"
+import { BrowserRouter } from "react-router-dom"
+import AppRouter from "./router"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary"
+import type { ErrorInfo } from "react"
+
+// sementara utk persist query? ( updated product list karna add/edit product msh mock)
+const persister = createAsyncStoragePersister({
+  storage: window.localStorage,
+})
 
 function ErrorFallback({ error, resetErrorBoundary }: Readonly<FallbackProps>) {
   return (
@@ -19,17 +26,18 @@ function ErrorFallback({ error, resetErrorBoundary }: Readonly<FallbackProps>) {
           {error.message}
         </p>
         <button
-          className="bg-[#7B1E3A] text-white text-center w-full p-2 rounded hover:bg-[#9B2C4A] cursor-pointer" 
-          onClick={resetErrorBoundary}>
-            Ulang
+          className="bg-[#7B1E3A] text-white text-center w-full p-2 rounded hover:bg-[#9B2C4A] cursor-pointer"
+          onClick={resetErrorBoundary}
+        >
+          Ulang
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 function logErrorToService(error: Error, info: ErrorInfo) {
-  console.error("Logging error:", error, info);
+  console.error("Logging error:", error, info)
 }
 
 export function App() {
@@ -41,14 +49,18 @@ export function App() {
           FallbackComponent={ErrorFallback}
           onError={logErrorToService}
         >
-              <QueryClientProvider client={queryClient}>
-                <BrowserRouter>
-                  <AppRouter />
-                </BrowserRouter>
-                <ReactQueryDevtools initialIsOpen={false} />
-              </QueryClientProvider>
+          <PersistQueryClientProvider // sementara utk persist query? ( updated product list karna add/edit product msh mock)
+            client={queryClient}
+            persistOptions={{ persister }}
+          >
+            <BrowserRouter>
+              <AppRouter />
+            </BrowserRouter>
+
+            <ReactQueryDevtools initialIsOpen={false} />
+          </PersistQueryClientProvider>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>
-  );
+  )
 }
