@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useDebounce } from "../../../shared/hooks/useDebounce"
 import ProductSearch from "../../../oldComponents/ProductSearch"
@@ -9,14 +9,17 @@ import { productService } from "../../../api/services/product.service"
 import { AddToCartButton } from "../../cart/components/AddToCartButton"
 import { useProducts } from "../hooks/useProducts"
 import type { ProductType } from "../types/product"
+import { ProductFormDialog } from "../components/ProductFormDialog"
+import type { ProductInputSchemaType } from "../../../api/schemas/product.schema"
 
 export default function Products() {
-  const navigate = useNavigate()
-  const { deleteProduct } = useProducts()
-
   const [search, setSearch] = useState("")
-  const debouncedSearch = useDebounce(search, 500)
+  const [openProductFormDialog, setOpenProductFormDialog] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null)
 
+  // const navigate = useNavigate()
+  const { addProduct, updateProduct,deleteProduct } = useProducts()
+  const debouncedSearch = useDebounce(search, 500)
   const { showBoundary } = useErrorBoundary();
   const { data: products, isError, error } = useSuspenseQuery<ProductType[]>({
     queryKey: ["products"],
@@ -33,6 +36,27 @@ export default function Products() {
     p.name.toLowerCase().includes(debouncedSearch.toLowerCase())
   )
 
+  const handleAddProduct = () => {
+    setSelectedProduct(null)
+    setOpenProductFormDialog(true)
+  }
+
+  const handleEditProduct = (product: ProductType) => {
+    setSelectedProduct(product)
+    setOpenProductFormDialog(true)
+  }
+
+  const handleUpdate = async (id: string | null, input: ProductInputSchemaType) => {
+    if (id) {
+      updateProduct(id, input)
+    } else {
+      addProduct(input)
+    }
+
+    setOpenProductFormDialog(false)
+  }
+
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -42,7 +66,7 @@ export default function Products() {
           <ProductSearch value={search} onChange={setSearch} />
 
           <button
-            onClick={() => navigate("/products/new")}
+            onClick={handleAddProduct}
             className="bg-[#7B1E3A] text-white px-4 py-2 rounded"
           >
             + Tambah Produk
@@ -69,7 +93,7 @@ export default function Products() {
                 <td className="p-2">{p.price}</td>
                 <td className="p-2 flex gap-2 justify-center">
                   <button
-                    onClick={() => navigate(`/products/edit/${p.id}`)}
+                    onClick={() => handleEditProduct(p)}
                     className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
                   >
                     Ubah
@@ -89,6 +113,15 @@ export default function Products() {
           </tbody>
         </table>
       )}
+
+      <ProductFormDialog
+        open={openProductFormDialog}
+        onOpenChange={setOpenProductFormDialog}
+        product={selectedProduct}
+        onSubmit={handleUpdate}
+      />
     </div>
+
+    
   )
 }
