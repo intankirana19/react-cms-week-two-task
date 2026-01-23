@@ -11,11 +11,14 @@ import { useProducts } from "../hooks/useProducts"
 import type { ProductType } from "../types/product"
 import { ProductFormDialog } from "../components/ProductFormDialog"
 import type { ProductInputSchemaType } from "../../../api/schemas/product.schema"
+import { Pagination } from "../../../shared/components/Pagination"
 
 export default function Products() {
   const [search, setSearch] = useState("")
   const [openProductFormDialog, setOpenProductFormDialog] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // const navigate = useNavigate()
   const { addProduct, updateProduct,deleteProduct } = useProducts()
@@ -56,6 +59,16 @@ export default function Products() {
     setOpenProductFormDialog(false)
   }
 
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
 
   return (
     <div>
@@ -77,6 +90,7 @@ export default function Products() {
       {filteredProducts.length === 0 ? (
         <p className="text-gray-500">Tidak ada produk.</p>
       ) : (
+        <>
         <table className="w-full bg-white rounded shadow">
           <thead>
             <tr className="border-b">
@@ -87,7 +101,7 @@ export default function Products() {
           </thead>
 
           <tbody>
-            {filteredProducts.map((p) => (
+            {paginatedProducts.map((p) => (
               <tr key={p.id} className="border-b">
                 <td className="p-2">{p.name}</td>
                 <td className="p-2">{p.price}</td>
@@ -112,6 +126,16 @@ export default function Products() {
             ))}
           </tbody>
         </table>
+
+        <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={filteredProducts.length}
+            onItemsPerPageChange={handleItemsPerPageChange}
+          />
+        </>
       )}
 
       <ProductFormDialog

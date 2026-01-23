@@ -36,6 +36,10 @@
   --color-black: oklch(0 0 0);
   --color-white: oklch(1 0 0);
   --color-disabled: oklch(0.417 0.113 244);
+
+
+  --shadow-lg: 0 4px 6px -2px oklch(0.2099 0.0341 263.44 / 3%), 0 12px 16px -4px oklch(0.2099 0.0341 263.44 / 8%);
+  --shadow-xl: 0 8px 8px -4px oklch(0.2099 0.0341 263.44 / 3%), 0 20px 24px -4px oklch(0.2099 0.0341 263.44 / 8%);
 }
 
 /* react default css */
