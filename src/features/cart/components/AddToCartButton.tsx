@@ -47,7 +47,6 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
       <RemoveFromCartConfirmationDialog
         open={openRemoveFromCartDialog}
         onOpenChange={setOpenRemoveFromCartDialog}
-        product={product}
         onConfirm={() => {
           removeItem(product.id)
           setOpenRemoveFromCartDialog(false)

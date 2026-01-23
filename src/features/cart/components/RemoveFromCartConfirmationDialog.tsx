@@ -1,21 +1,17 @@
 import { AlertTriangle } from "lucide-react";
-import type { ProductSchemaType } from "../../../api/schemas/product.schema";
 import { Button } from "../../../shared/components/Button";
 import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../../../shared/components/Dialog";
 
 interface RemoveFromCartConfirmationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  product: ProductSchemaType;
-  onConfirm: (id: string) => void;
+  onConfirm: () => void;
 }
 
-export function RemoveFromCartConfirmationDialog({ open, onOpenChange, product, onConfirm }: Readonly<RemoveFromCartConfirmationDialogProps>) {
-    const handleConfirm = () => {
-        if (product) {
-        onConfirm(product.id);
-        }
-    };
+export function RemoveFromCartConfirmationDialog({ open, onOpenChange, onConfirm }: Readonly<RemoveFromCartConfirmationDialogProps>) {
+    // const handleConfirm = () => {
+    //     onConfirm()
+    // };
 
     return(
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -37,7 +33,7 @@ export function RemoveFromCartConfirmationDialog({ open, onOpenChange, product, 
                     <Button variant="tertiary" onClick={() => onOpenChange(false)}>
                         Kembali
                     </Button>
-                    <Button variant="secondary" onClick={handleConfirm}>
+                    <Button variant="secondary" onClick={onConfirm}>
                         Hapus
                     </Button>
                 </DialogFooter>
