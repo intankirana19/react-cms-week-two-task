@@ -28,7 +28,7 @@ export default function CheckoutPage() {
 
       <button
         onClick={handleSubmit}
-        className="bg-[#7B1E3A] text-white px-6 py-3 rounded"
+        className="bg-primary-200 text-white px-6 py-3 rounded"
       >
         Bayar Sekarang
       </button>

@@ -16,7 +16,7 @@ export default function Dashboard() {
 
       <div className="bg-white p-4 rounded shadow w-64">
         <p className="text-gray-500">Total Produk</p>
-        <p className="text-3xl font-bold text-[#7B1E3A]">
+        <p className="text-3xl font-bold text-primary-200">
           {products.length}
         </p>
       </div>

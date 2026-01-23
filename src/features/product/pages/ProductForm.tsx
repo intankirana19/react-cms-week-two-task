@@ -97,7 +97,7 @@ export default function ProductForm() {
           </p>
         }
 
-        <button className="bg-[#7B1E3A] cursor-pointer text-white px-4 py-2 mt-4 rounded w-full">
+        <button className="bg-primary-200 cursor-pointer text-white px-4 py-2 mt-4 rounded w-full">
           Simpan
         </button>
       </form>

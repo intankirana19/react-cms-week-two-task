@@ -13,7 +13,7 @@ export const HeaderCart = memo(function HeaderCart() {
       {
         // count > 0 && 
       (
-        <span className="absolute -top-2 -right-2 bg-white border-2 border-[#7B1E3A] text-[#7B1E3A] text-xs rounded-full px-1">
+        <span className="absolute -top-2 -right-2 bg-white border-2 border-primary-200 text-primary-200 text-xs rounded-full px-1">
           {count}
         </span>
       )}

@@ -16,7 +16,7 @@ export default function Header({ onToggleSidebar }: Readonly<Props>) {
   }
 
   return (
-    <header className="bg-[#7B1E3A] text-white px-4 py-3 flex items-center justify-between">
+    <header className="bg-primary-200 text-white px-4 py-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <button onClick={onToggleSidebar} className="text-2xl">
           ☰
@@ -30,7 +30,7 @@ export default function Header({ onToggleSidebar }: Readonly<Props>) {
         <HeaderCart/>
         <button
           onClick={handleLogout}
-          className="bg-white text-[#7B1E3A] font-bold text-center px-3 py-1 rounded hover:bg-gray-100 cursor-pointer"
+          className="bg-white text-primary-200 font-bold text-center px-3 py-1 rounded hover:bg-gray-100 cursor-pointer"
         >
           Keluar
         </button>

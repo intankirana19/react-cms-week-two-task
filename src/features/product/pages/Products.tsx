@@ -80,7 +80,7 @@ export default function Products() {
 
           <button
             onClick={handleAddProduct}
-            className="bg-[#7B1E3A] text-white px-4 py-2 rounded"
+            className="bg-primary-200 text-white px-4 py-2 rounded"
           >
             + Tambah Produk
           </button>
@@ -114,7 +114,7 @@ export default function Products() {
                   </button>
                   <button
                     onClick={() => deleteProduct(p.id)}
-                    className="bg-white border-2 border-[#7B1E3A] text-[#7B1E3A] px-4 py-2 rounded"
+                    className="bg-white border-2 border-primary-200 text-primary-200 px-4 py-2 rounded"
                   >
                     Hapus
                   </button>

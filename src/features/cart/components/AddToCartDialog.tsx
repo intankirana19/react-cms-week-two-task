@@ -22,7 +22,7 @@ export function AddToCartDialog({ open, onClose }: Readonly<Props>) {
 
           <button
             onClick={() => navigate("/checkout")}
-            className="px-4 py-2 bg-[#7B1E3A] text-white rounded"
+            className="px-4 py-2 bg-primary-200 text-white rounded"
           >
             Checkout
           </button>

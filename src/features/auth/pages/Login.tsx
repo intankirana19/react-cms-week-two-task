@@ -32,7 +32,7 @@ export default function Login() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 rounded shadow w-80 space-y-4"
       >
-        <h1 className="text-xl font-bold text-center text-[#7B1E3A]">
+        <h1 className="text-xl font-bold text-center text-primary-200">
           Login
         </h1>
 
@@ -65,7 +65,7 @@ export default function Login() {
 
         <button
           type="submit"
-          className="bg-[#7B1E3A] text-white w-full py-2 rounded hover:bg-[#9B2C4A] cursor-pointer"
+          className="bg-primary-200 text-white w-full py-2 rounded hover:bg-primary-100 cursor-pointer"
         >
           Login
         </button>

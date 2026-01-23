@@ -29,7 +29,7 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
     return (
       <button
         onClick={handleAdd}
-        className="bg-[#7B1E3A] text-white px-3 py-1 rounded w-full h-full"
+        className="bg-primary-200 text-white px-3 py-1 rounded w-full h-full"
       >
         Add to Cart
       </button>
