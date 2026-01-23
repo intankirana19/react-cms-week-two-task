@@ -3,6 +3,7 @@ import { useCallback } from "react"
 import { CartList } from "../components/CartList"
 import { CartSummary } from "../components/CartSummary"
 import { useCartStore } from "../stores/cart.store"
+import { Button } from "../../../shared/components/Button"
 
 export default function CheckoutPage() {
   const items = useCartStore((s) => s.items)
@@ -26,12 +27,14 @@ export default function CheckoutPage() {
       <CartList />
       <CartSummary />
 
-      <button
+      <Button onClick={handleSubmit}>Bayar Sekarang</Button>
+
+      {/* <button
         onClick={handleSubmit}
         className="bg-primary-200 text-white px-6 py-3 rounded"
       >
         Bayar Sekarang
-      </button>
+      </button> */}
     </div>
   )
 }

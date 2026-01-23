@@ -3,6 +3,8 @@ import { memo, useCallback, useState } from "react"
 import type { ProductType } from "../../product/types/product"
 import { useCartStore } from "../stores/cart.store"
 import { RemoveFromCartConfirmationDialog } from "./RemoveFromCartConfirmationDialog"
+import { Button } from "../../../shared/components/Button"
+import { ShoppingCart } from "lucide-react"
 
 export const AddToCartButton = memo(function AddToCartButton({ product }: { product: ProductType }) {
   const { items, addItem, updateQty, removeItem } = useCartStore()
@@ -27,21 +29,24 @@ export const AddToCartButton = memo(function AddToCartButton({ product }: { prod
 
   if (!cartItem) {
     return (
-      <button
-        onClick={handleAdd}
-        className="bg-primary-200 text-white px-3 py-1 rounded w-full h-full"
-      >
-        Add to Cart
-      </button>
+      <Button variant="secondary" className="w-full" onClick={handleAdd}>
+        <ShoppingCart></ShoppingCart>
+      </Button>
+      // <button
+      //   onClick={handleAdd}
+      //   className="bg-primary-200 text-white px-3 py-1 rounded w-full h-full"
+      // >
+      //   Tambah ke Keranjang
+      // </button>
     )
   }
 
   return (
     <>
       <div className="flex justify-center items-center gap-2 w-full h-full">
-        <button onClick={handleMinus} className="border px-2 rounded">-</button>
+        <Button variant="tertiary" size="sm" onClick={handleMinus}>-</Button>
         <span>{cartItem.quantity}</span>
-        <button onClick={handlePlus} className="border px-2 rounded">+</button>
+        <Button variant="tertiary" size="sm" onClick={handlePlus}>+</Button>
       </div>
 
       <RemoveFromCartConfirmationDialog

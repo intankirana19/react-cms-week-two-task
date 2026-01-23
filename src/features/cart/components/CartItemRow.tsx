@@ -3,6 +3,7 @@ import type { CartItem } from "../../../shared/types/cart"
 import { useCartStore } from "../stores/cart.store"
 // import { ConfirmRemoveDialog } from "../../../oldComponents/ConfirmRemoveDialog"
 import { RemoveFromCartConfirmationDialog } from "./RemoveFromCartConfirmationDialog"
+import { Button } from "../../../shared/components/Button"
 
 export const CartItemRow = memo(function CartItemRow({ item }: { item: CartItem }) {
   const updateQty = useCartStore((s) => s.updateQty)
@@ -26,9 +27,11 @@ export const CartItemRow = memo(function CartItemRow({ item }: { item: CartItem 
         </div>
 
         <div className="flex items-center gap-2">
-          <button onClick={dec} className="border px-2 rounded">-</button>
+          <Button variant="tertiary" size="sm" onClick={dec}>-</Button>
+
           <span>{item.quantity}</span>
-          <button onClick={inc} className="border px-2 rounded">+</button>
+
+          <Button variant="tertiary" size="sm" onClick={inc}>+</Button>
           {/* <button onClick={() => removeItem(item.id)}>Hapus</button> */}
         </div>
       </div>

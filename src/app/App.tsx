@@ -9,6 +9,7 @@ import AppRouter from "./router"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary"
 import type { ErrorInfo } from "react"
+import { Button } from "../shared/components/Button"
 
 // sementara utk persist query? ( updated product list karna add/edit product msh mock)
 const persister = createAsyncStoragePersister({
@@ -25,12 +26,7 @@ function ErrorFallback({ error, resetErrorBoundary }: Readonly<FallbackProps>) {
         <p className="text-xl text-center">
           {error.message}
         </p>
-        <button
-          className="bg-primary-200 text-white text-center w-full p-2 rounded hover:bg-primary-100 cursor-pointer"
-          onClick={resetErrorBoundary}
-        >
-          Ulang
-        </button>
+        <Button variant="primary" className="w-full" onClick={resetErrorBoundary}>Ulang</Button>
       </div>
     </div>
   )

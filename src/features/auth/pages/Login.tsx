@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuth } from "../hooks/useAuth"
 import { authInputSchema, type AuthInputSchemaType } from "../../../api/schemas/auth.schema"
+import { Button } from "../../../shared/components/Button"
 
 // type LoginForm = {
 //   email: string
@@ -63,12 +64,7 @@ export default function Login() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="bg-primary-200 text-white w-full py-2 rounded hover:bg-primary-100 cursor-pointer"
-        >
-          Login
-        </button>
+        <Button variant="primary" className="w-full" type="submit">Masuk</Button>
       </form>
     </div>
   )

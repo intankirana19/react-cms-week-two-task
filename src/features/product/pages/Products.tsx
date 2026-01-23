@@ -12,6 +12,8 @@ import type { ProductType } from "../types/product"
 import { ProductFormDialog } from "../components/ProductFormDialog"
 import type { ProductInputSchemaType } from "../../../api/schemas/product.schema"
 import { Pagination } from "../../../shared/components/Pagination"
+import { Button } from "../../../shared/components/Button"
+import { Edit, Trash2 } from "lucide-react"
 
 export default function Products() {
   const [search, setSearch] = useState("")
@@ -78,12 +80,9 @@ export default function Products() {
         <div className="flex gap-2">
           <ProductSearch value={search} onChange={setSearch} />
 
-          <button
-            onClick={handleAddProduct}
-            className="bg-primary-200 text-white px-4 py-2 rounded"
-          >
+          <Button variant="primary" onClick={handleAddProduct}>
             + Tambah Produk
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -105,8 +104,14 @@ export default function Products() {
               <tr key={p.id} className="border-b">
                 <td className="p-2">{p.name}</td>
                 <td className="p-2">{p.price}</td>
-                <td className="p-2 flex gap-2 justify-center">
-                  <button
+                <td className="p-2 flex gap-2 justify-center item-center">
+                  <Button variant="text" title="Ubah Produk" onClick={() => handleEditProduct(p)}>
+                    <Edit></Edit>
+                  </Button>
+                  <Button variant="text"  title="Hapus Produk" onClick={() => deleteProduct(p.id)}>
+                    <Trash2 className="text-danger-400"></Trash2>
+                  </Button>
+                  {/* <button
                     onClick={() => handleEditProduct(p)}
                     className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
                   >
@@ -117,7 +122,7 @@ export default function Products() {
                     className="bg-white border-2 border-primary-200 text-primary-200 px-4 py-2 rounded"
                   >
                     Hapus
-                  </button>
+                  </button> */}
                   <div className="w-28">
                     <AddToCartButton product={p} />
                   </div>
