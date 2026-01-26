@@ -5,7 +5,6 @@ import { CartSummary } from "../components/CartSummary"
 import { useCartStore } from "../stores/cart.store"
 import { Button } from "../../../shared/components/Button"
 import { useToast } from "../../../shared/hooks/useToast"
-import { ToastContainer } from "../../../shared/components/Toast"
 
 export default function CheckoutPage() {
   const items = useCartStore((s) => s.items)
@@ -13,7 +12,6 @@ export default function CheckoutPage() {
   const navigate = useNavigate()
 
   const { 
-    toasts, 
     success,
     error 
   } = useToast();
@@ -40,7 +38,6 @@ export default function CheckoutPage() {
   }
 
   return (
-    <>
       <div className="max-w-3xl mx-auto space-y-6">
         <h1 className="text-2xl font-bold">Checkout</h1>
 
@@ -56,8 +53,5 @@ export default function CheckoutPage() {
           Bayar Sekarang
         </button> */}
       </div>
-
-      <ToastContainer toasts={toasts} />
-    </>
   )
 }

@@ -10,6 +10,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary"
 import type { ErrorInfo } from "react"
 import { Button } from "../shared/components/Button"
+import { ToastContainer } from "../shared/components/Toast"
+import { useToast } from "../shared/hooks/useToast"
 
 // sementara utk persist query? ( updated product list karna add/edit product msh mock)
 const persister = createAsyncStoragePersister({
@@ -37,6 +39,8 @@ function logErrorToService(error: Error, info: ErrorInfo) {
 }
 
 export function App() {
+  const {toasts} = useToast()
+  
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
@@ -50,6 +54,7 @@ export function App() {
             persistOptions={{ persister }}
           >
             <BrowserRouter>
+              <ToastContainer toasts={toasts} />
               <AppRouter />
             </BrowserRouter>
 
