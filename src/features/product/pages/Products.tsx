@@ -1,7 +1,6 @@
 // import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useDebounce } from "../../../shared/hooks/useDebounce"
-import ProductSearch from "../../../oldComponents/ProductSearch"
 import { useSuspenseQuery } from "@tanstack/react-query"
 // import { fetchProducts } from "../api/products"
 import { useErrorBoundary } from "react-error-boundary"
@@ -14,9 +13,10 @@ import type { ProductInputSchemaType } from "../../../api/schemas/product.schema
 import { Pagination } from "../../../shared/components/Pagination"
 import { Button } from "../../../shared/components/Button"
 import { Edit, Trash2 } from "lucide-react"
+import Search from "../../../shared/components/Search"
 
 export default function Products() {
-  const [search, setSearch] = useState("")
+  const [searchProduct, setSearchProduct] = useState("")
   const [openProductFormDialog, setOpenProductFormDialog] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null)
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +24,7 @@ export default function Products() {
 
   // const navigate = useNavigate()
   const { addProduct, updateProduct,deleteProduct } = useProducts()
-  const debouncedSearch = useDebounce(search, 500)
+  const debouncedSearch = useDebounce(searchProduct, 500)
   const { showBoundary } = useErrorBoundary();
   const { data: products, isError, error } = useSuspenseQuery<ProductType[]>({
     queryKey: ["products"],
@@ -78,7 +78,7 @@ export default function Products() {
         <h1 className="text-xl font-bold">Produk</h1>
 
         <div className="flex gap-2">
-          <ProductSearch value={search} onChange={setSearch} />
+          <Search value={searchProduct} onChange={setSearchProduct} />
 
           <Button variant="primary" onClick={handleAddProduct}>
             + Tambah Produk

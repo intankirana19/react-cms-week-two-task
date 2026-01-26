@@ -3,7 +3,7 @@ type Props = {
   onChange: (value: string) => void
 }
 
-export default function ProductSearch({ value, onChange }: Props) {
+export default function Search({ value, onChange }: Readonly<Props>) {
   return (
     <input
       value={value}
