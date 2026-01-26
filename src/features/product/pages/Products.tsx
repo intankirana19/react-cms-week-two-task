@@ -14,6 +14,8 @@ import { Pagination } from "../../../shared/components/Pagination"
 import { Button } from "../../../shared/components/Button"
 import { Edit, Trash2 } from "lucide-react"
 import Search from "../../../shared/components/Search"
+import { sortByKey } from "../../../shared/utils/sort"
+import { Table, type Column } from "../../../shared/components/Table"
 
 export default function Products() {
   const [searchProduct, setSearchProduct] = useState("")
@@ -21,7 +23,9 @@ export default function Products() {
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null)
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
+  const [sortKey, setSortKey] = useState<keyof ProductType | null>(null)
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(null)
+  
   // const navigate = useNavigate()
   const { addProduct, updateProduct,deleteProduct } = useProducts()
   const debouncedSearch = useDebounce(searchProduct, 500)
@@ -31,6 +35,39 @@ export default function Products() {
     queryFn: () => productService.getList(),
     // queryFn: fetchProducts,
   })
+
+  
+  const columns: Column<ProductType>[] = [
+    {
+      key: "name",
+      label: "Nama",
+      sortable: true,
+    },
+    {
+      key: "price",
+      label: "Harga",
+      sortable: true,
+    },
+    {
+      key: "id",
+      label: "",
+      render: (p: ProductType) => (
+        <div className="p-2 flex gap-2 justify-center items-center">
+          <Button variant="text" title="Ubah Produk" onClick={() => handleEditProduct(p)}>
+            <Edit />
+          </Button>
+  
+          <Button variant="text" title="Hapus Produk" onClick={() => deleteProduct(p.id)}>
+            <Trash2 className="text-danger-400" />
+          </Button>
+  
+          <div className="w-28">
+            <AddToCartButton product={p} />
+          </div>
+        </div>
+      ),
+    },
+  ]
 
   if(isError) {
     showBoundary(error)
@@ -61,8 +98,22 @@ export default function Products() {
     setOpenProductFormDialog(false)
   }
 
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const paginatedProducts = filteredProducts.slice(
+  
+  const sortedProducts = sortByKey(filteredProducts, sortKey, sortDirection);
+  
+  const handleSortChange = (key: keyof ProductType) => {
+    if (sortKey === key) {
+      setSortDirection(prev =>
+        prev === "asc" ? "desc" : prev === "desc" ? null : "asc"
+      )
+    } else {
+      setSortKey(key)
+      setSortDirection("asc")
+    }
+  }
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const paginatedProducts = sortedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -71,6 +122,7 @@ export default function Products() {
     setItemsPerPage(newItemsPerPage);
     setCurrentPage(1);
   };
+
 
   return (
     <div>
@@ -88,60 +140,83 @@ export default function Products() {
 
       {filteredProducts.length === 0 ? (
         <p className="text-gray-500">Tidak ada produk.</p>
-      ) : (
+      ) : 
+      (
         <>
-        <table className="w-full bg-white rounded shadow">
-          <thead>
-            <tr className="border-b">
-              <th className="p-2 text-left">Nama</th>
-              <th className="p-2 text-left">Harga</th>
-              <th className="p-2"></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {paginatedProducts.map((p) => (
-              <tr key={p.id} className="border-b">
-                <td className="p-2">{p.name}</td>
-                <td className="p-2">{p.price}</td>
-                <td className="p-2 flex gap-2 justify-center item-center">
-                  <Button variant="text" title="Ubah Produk" onClick={() => handleEditProduct(p)}>
-                    <Edit></Edit>
-                  </Button>
-                  <Button variant="text"  title="Hapus Produk" onClick={() => deleteProduct(p.id)}>
-                    <Trash2 className="text-danger-400"></Trash2>
-                  </Button>
-                  {/* <button
-                    onClick={() => handleEditProduct(p)}
-                    className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
-                  >
-                    Ubah
-                  </button>
-                  <button
-                    onClick={() => deleteProduct(p.id)}
-                    className="bg-white border-2 border-primary-200 text-primary-200 px-4 py-2 rounded"
-                  >
-                    Hapus
-                  </button> */}
-                  <div className="w-28">
-                    <AddToCartButton product={p} />
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            itemsPerPage={itemsPerPage}
-            totalItems={filteredProducts.length}
-            onItemsPerPageChange={handleItemsPerPageChange}
+          <Table
+            columns={columns}
+            data={paginatedProducts}
+            sortKey={sortKey}
+            sortDirection={sortDirection}
+            onSortChange={handleSortChange}
+            rowKey={(p) => p.id}
           />
+
+          <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={sortedProducts.length}
+              onItemsPerPageChange={handleItemsPerPageChange}
+            />
         </>
-      )}
+      )
+      // (
+      //   <>
+      //   <table className="w-full bg-white rounded shadow">
+      //     <thead>
+      //       <tr className="border-b">
+      //         <th className="p-2 text-left">Nama</th>
+      //         <th className="p-2 text-left">Harga</th>
+      //         <th className="p-2"></th>
+      //       </tr>
+      //     </thead>
+
+      //     <tbody>
+      //       {paginatedProducts.map((p) => (
+      //         <tr key={p.id} className="border-b">
+      //           <td className="p-2">{p.name}</td>
+      //           <td className="p-2">{p.price}</td>
+      //           <td className="p-2 flex gap-2 justify-center item-center">
+      //             <Button variant="text" title="Ubah Produk" onClick={() => handleEditProduct(p)}>
+      //               <Edit></Edit>
+      //             </Button>
+      //             <Button variant="text"  title="Hapus Produk" onClick={() => deleteProduct(p.id)}>
+      //               <Trash2 className="text-danger-400"></Trash2>
+      //             </Button>
+      //             {/* <button
+      //               onClick={() => handleEditProduct(p)}
+      //               className="bg-white border-2 border-grey-50 px-4 py-2 rounded"
+      //             >
+      //               Ubah
+      //             </button>
+      //             <button
+      //               onClick={() => deleteProduct(p.id)}
+      //               className="bg-white border-2 border-primary-200 text-primary-200 px-4 py-2 rounded"
+      //             >
+      //               Hapus
+      //             </button> */}
+      //             <div className="w-28">
+      //               <AddToCartButton product={p} />
+      //             </div>
+      //           </td>
+      //         </tr>
+      //       ))}
+      //     </tbody>
+      //   </table>
+
+      //   <Pagination
+      //       currentPage={currentPage}
+      //       totalPages={totalPages}
+      //       onPageChange={setCurrentPage}
+      //       itemsPerPage={itemsPerPage}
+      //       totalItems={filteredProducts.length}
+      //       onItemsPerPageChange={handleItemsPerPageChange}
+      //     />
+      //   </>
+      // )
+      }
 
       <ProductFormDialog
         open={openProductFormDialog}
