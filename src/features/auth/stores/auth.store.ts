@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { createJSONStorage, persist } from "zustand/middleware"
 
 type AuthState = {
   isAuthenticated: boolean
@@ -16,6 +16,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
+      storage: createJSONStorage(() => sessionStorage) // sementara simpan ke session utk auto logout pas closed,kalau udh ada api?
     }
   )
 )
