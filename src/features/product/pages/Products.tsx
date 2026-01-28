@@ -27,7 +27,7 @@ export default function Products() {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(null)
   
   // const navigate = useNavigate()
-  const { addProduct, updateProduct,deleteProduct } = useProducts()
+  const { addProduct, updateProduct, deleteProduct } = useProducts()
   const debouncedSearch = useDebounce(searchProduct, 500)
   const { showBoundary } = useErrorBoundary();
   const { data: products, isError, error } = useSuspenseQuery<ProductType[]>({

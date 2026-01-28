@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from "react"
-import type { CartItem } from "../../../shared/types/cart"
+import type { CartItem } from "../types/cart"
 import { useCartStore } from "../stores/cart.store"
 // import { ConfirmRemoveDialog } from "../../../oldComponents/ConfirmRemoveDialog"
 import { RemoveFromCartConfirmationDialog } from "./RemoveFromCartConfirmationDialog"
