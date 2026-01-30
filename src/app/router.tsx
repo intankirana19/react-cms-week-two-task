@@ -4,6 +4,9 @@ import NotFound from "../shared/pages/NotFound"
 import { lazy, Suspense, type ElementType } from "react"
 import Login from "../features/auth/pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
+import { useAuthStore } from "../features/auth/stores/auth.store";
+import { role } from "../shared/constants/role";
+import RoleGuard from "./RoleGuard";
 
 const DashboardPage = lazy(() => import('../features/dashboard/pages/Dashboard'));
 const ProductPage = lazy(() => import('../features/product/pages/Products'));
@@ -22,17 +25,19 @@ function LoadingFallback() {
 }
 
 export default function AppRouter() {
+  const {user} = useAuthStore();
+
   type AppRoute =
     | { index: true; Component: ElementType }
-    | { path: string; Component: ElementType };
+    | { path: string; Component: ElementType; isAllowed: boolean };
 
   const routes: AppRoute[] = [
     {index: true, Component: ProductPage},
-    {path: '/dashboard', Component: DashboardPage},
-    {path: '/products', Component: ProductPage},
-    {path: '/products/new', Component: ProductFormPage},
-    {path: '/products/edit/:id', Component: ProductFormPage},
-    {path: '/checkout', Component: CheckoutPage},
+    {path: '/dashboard', Component: DashboardPage, isAllowed: true},
+    {path: '/products', Component: ProductPage, isAllowed: true},
+    {path: '/products/new', Component: ProductFormPage, isAllowed: user?.role === role.admin},
+    {path: '/products/edit/:id', Component: ProductFormPage, isAllowed: user?.role === role.admin},
+    {path: '/checkout', Component: CheckoutPage, isAllowed: user?.role === role.buyer},
   ]
 
   return (
@@ -73,7 +78,13 @@ export default function AppRouter() {
               return 'index' in r ? (
               <Route key="index" index element={<Component />} />
                 ) : (
-                  <Route key={r.path} path={r.path} element={<Component />} />
+                  <Route key={r.path} path={r.path} 
+                          element={
+                            <RoleGuard isAllowed={r.isAllowed}>
+                                <Component />
+                            </RoleGuard>
+                          } 
+                  />
                 );
             })}
 
