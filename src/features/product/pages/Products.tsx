@@ -16,8 +16,12 @@ import { Edit, Trash2 } from "lucide-react"
 import Search from "../../../shared/components/Search"
 import { sortByKey } from "../../../shared/utils/sort"
 import { Table, type Column } from "../../../shared/components/Table"
+import { useAuthStore } from "../../auth/stores/auth.store"
+import { role } from "../../../shared/constants/role"
 
 export default function Products() {
+  const {user} = useAuthStore();
+
   const [searchProduct, setSearchProduct] = useState("")
   const [openProductFormDialog, setOpenProductFormDialog] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null)
@@ -53,17 +57,23 @@ export default function Products() {
       label: "",
       render: (p: ProductType) => (
         <div className="p-2 flex gap-2 justify-center items-center">
-          <Button variant="text" title="Ubah Produk" onClick={() => handleEditProduct(p)}>
-            <Edit />
-          </Button>
-  
-          <Button variant="text" title="Hapus Produk" onClick={() => deleteProduct(p.id)}>
-            <Trash2 className="text-danger-400" />
-          </Button>
-  
-          <div className="w-28">
-            <AddToCartButton product={p} />
-          </div>
+          {user?.role === role.admin && 
+            <>
+              <Button variant="text" title="Ubah Produk" onClick={() => handleEditProduct(p)}>
+                <Edit />
+              </Button>
+      
+              <Button variant="text" title="Hapus Produk" onClick={() => deleteProduct(p.id)}>
+                <Trash2 className="text-danger-400" />
+              </Button>
+            </>
+          }
+
+          {user?.role === role.buyer && 
+            <div className="w-28">
+              <AddToCartButton product={p} />
+            </div>
+          }
         </div>
       ),
     },
@@ -132,9 +142,11 @@ export default function Products() {
         <div className="flex gap-2">
           <Search value={searchProduct} onChange={setSearchProduct} />
 
-          <Button variant="primary" onClick={handleAddProduct}>
-            + Tambah Produk
-          </Button>
+          {user?.role === role.admin &&
+            <Button variant="primary" onClick={handleAddProduct}>
+              + Tambah Produk
+            </Button>
+          }
         </div>
       </div>
 
