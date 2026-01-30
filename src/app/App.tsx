@@ -8,10 +8,12 @@ import { BrowserRouter } from "react-router-dom"
 import AppRouter from "./router"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary"
-import type { ErrorInfo } from "react"
+import { useEffect, type ErrorInfo } from "react"
 import { Button } from "../shared/components/Button"
 import { ToastContainer } from "../shared/components/Toast"
 import { useToast } from "../shared/hooks/useToast"
+import { useAuthStore } from "../features/auth/stores/auth.store"
+import { role } from "../shared/constants/role"
 
 // sementara utk persist query? ( updated product list karna add/edit product msh mock)
 const persister = createAsyncStoragePersister({
@@ -39,7 +41,12 @@ function logErrorToService(error: Error, info: ErrorInfo) {
 }
 
 export function App() {
+  const {user} = useAuthStore();
   const {toasts} = useToast()
+
+  useEffect(() => {
+    document.title = `${user?.role === role.admin ? 'Admin ' : ''}Toko Intan`;
+  }, [user]);
   
   return (
     <QueryErrorResetBoundary>
