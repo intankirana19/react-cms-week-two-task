@@ -2,6 +2,7 @@ import { role } from "../../shared/constants/role";
 
 export const userAdminMock = {
     id: '0000001',
+    token: crypto.randomUUID(),
     role:  role.admin, // sementara karna fitur admin/buyer gabung
     username: 'admin1',
     firstname: 'admin1',
@@ -14,6 +15,7 @@ export const userAdminMock = {
 
 export const userBuyerMock = {
     id: '00000011',
+    token: crypto.randomUUID(),
     role:  role.buyer, // sementara karna fitur admin/buyer gabung
     username: 'buyer',
     firstname: 'buyer',
