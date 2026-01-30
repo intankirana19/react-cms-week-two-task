@@ -1,4 +1,7 @@
 export const queryKeys = {
+    auth: {
+        all: ['auth'] as const,
+    },
     products: {
         all: ['products'] as const,
         lists: () => [...queryKeys.products.all, 'list'] as const, // sementara, api hanya kasi array produk2 blm ada data utk pagination
