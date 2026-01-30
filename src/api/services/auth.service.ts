@@ -6,7 +6,7 @@ export const authService = {
     login: async (data: AuthInputSchemaType): Promise<UserSchemaType> => {
         // const url = `${AUTH_ROUTES.BASE}` // blm ada API
         // const response = await apiClient.get<UserSchemaType[]>(url) // blm ada API
-        if (data.username === 'admin1' || data.username === 'buyer') { 
+        if (data.username === 'admin1' || data.username === 'buyer') { // TODO: jelek,nanti ganti
             if (data.username === 'admin1') { 
                 return userAdminMock 
             } else {
