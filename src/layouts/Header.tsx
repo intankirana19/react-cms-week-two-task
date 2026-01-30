@@ -1,20 +1,23 @@
 import { HeaderCart } from "../features/cart/components/HeaderCart"
-import { useAuth } from "../features/auth/hooks/useAuth"
-import { useNavigate } from "react-router-dom"
+// import { useAuth } from "../features/auth/hooks/useAuth"
+// import { useNavigate } from "react-router-dom"
 import { Button } from "../shared/components/Button"
 import { LogOut, Menu } from "lucide-react"
+import { useLogout } from "../features/auth/hooks/useLogout"
 
 type Props = {
   onToggleSidebar: () => void
 }
 
 export default function Header({ onToggleSidebar }: Readonly<Props>) {
-  const { logout } = useAuth()
-  const navigate = useNavigate()
+  // const { logout } = useAuth()
+  // const navigate = useNavigate()
+  const logoutMutation = useLogout()
 
   function handleLogout() {
-    logout()
-    navigate("/login")
+    // logout()
+    // navigate("/login")
+    logoutMutation.mutate();
   }
 
   return (
