@@ -9,10 +9,11 @@ const mockItem = {
 }
 
 describe("CartItemRow", () => {
-  it("render item title & quantity", () => {
+  it("renders item name, price, and quantity", () => {
     render(<CartItemRow item={mockItem} />)
-
+ 
     expect(screen.getByText("Produk Tes")).toBeInTheDocument()
+    expect(screen.getByText("10000")).toBeInTheDocument()
     expect(screen.getByText("2")).toBeInTheDocument()
   })
 })
