@@ -94,4 +94,20 @@ describe("CartItemRow", () => {
  
     expect(screen.getByText("confirm-remove")).toBeInTheDocument()
   })
+
+  it("removes item when confirm is clicked", () => {
+    render(
+      <CartItemRow
+        item={{
+          ...mockItem,
+          quantity: 1,
+        }}
+      />
+    )
+ 
+    fireEvent.click(screen.getByText("-"))
+    fireEvent.click(screen.getByText("confirm-remove"))
+ 
+    expect(removeItem).toHaveBeenCalledWith("1")
+  })
 })
