@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { CartItemRow } from "../features/cart/components/CartItemRow"
 import type { CartItem } from "../features/cart/types/cart"
 import { useCartStore } from "../features/cart/stores/cart.store"
@@ -46,5 +46,13 @@ describe("CartItemRow", () => {
     expect(screen.getByText("Produk Tes")).toBeInTheDocument()
     expect(screen.getByText("10000")).toBeInTheDocument()
     expect(screen.getByText("2")).toBeInTheDocument()
+  })
+
+   it("increments quantity when + is clicked", () => {
+    render(<CartItemRow item={mockItem} />)
+ 
+    fireEvent.click(screen.getByText("+"))
+ 
+    expect(updateQty).toHaveBeenCalledWith("1", 3)
   })
 })
