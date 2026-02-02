@@ -55,4 +55,12 @@ describe("CartItemRow", () => {
  
     expect(updateQty).toHaveBeenCalledWith("1", 3)
   })
+
+  it("decrements quantity when - is clicked and quantity > 1", () => {
+    render(<CartItemRow item={mockItem} />)
+ 
+    fireEvent.click(screen.getByText("-"))
+ 
+    expect(updateQty).toHaveBeenCalledWith("1", 1)
+  })
 })
