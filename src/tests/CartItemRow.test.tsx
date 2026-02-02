@@ -5,6 +5,22 @@ import { useCartStore } from "../features/cart/stores/cart.store"
 
 vi.mock("../features/cart/stores/cart.store")
 
+vi.mock(
+  "../features/cart/components/RemoveFromCartConfirmationDialog",
+  () => ({
+    RemoveFromCartConfirmationDialog: ({
+      open,
+      onConfirm,
+    }: {
+      open: boolean
+      onConfirm: () => void
+    }) =>
+      open ? (
+        <button onClick={onConfirm}>confirm-remove</button>
+      ) : null,
+  })
+)
+
 type CartStore = {
   items: CartItem[]
   addItem: (item: Omit<CartItem, "quantity">) => void
