@@ -79,4 +79,19 @@ describe("CartItemRow", () => {
  
     expect(updateQty).toHaveBeenCalledWith("1", 1)
   })
+
+  it("opens remove confirmation dialog when quantity is 1", () => {
+    render(
+      <CartItemRow
+        item={{
+          ...mockItem,
+          quantity: 1,
+        }}
+      />
+    )
+ 
+    fireEvent.click(screen.getByText("-"))
+ 
+    expect(screen.getByText("confirm-remove")).toBeInTheDocument()
+  })
 })
