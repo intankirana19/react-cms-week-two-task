@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { CartItemRow } from "../features/cart/components/CartItemRow"
-import type { CartItem } from "../features/cart/types/cart"
-import { useCartStore } from "../features/cart/stores/cart.store"
+import { CartItemRow } from "../../../features/cart/components/CartItemRow"
+import type { CartItem } from "../../../features/cart/types/cart"
+import { useCartStore } from "../../../features/cart/stores/cart.store"
 
 vi.mock("../features/cart/stores/cart.store")
 

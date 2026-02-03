@@ -1,9 +1,9 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
-import { useAuthStore } from "../features/auth/stores/auth.store";
-import { renderWithProviders } from "./utils";
-import Login from "../features/auth/pages/Login";
-import { authService } from "../api/services/auth.service";
-import { userAdminMock } from "../api/mocks/user";
+import { userAdminMock } from "../../../api/mocks/user";
+import { authService } from "../../../api/services/auth.service";
+import Login from "../../../features/auth/pages/Login";
+import { useAuthStore } from "../../../features/auth/stores/auth.store";
+import { renderWithProviders } from "../../utils";
  
 
 vi.mock("../api/services/auth.service", () => ({
