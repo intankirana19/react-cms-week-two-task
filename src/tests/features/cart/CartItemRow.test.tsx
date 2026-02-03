@@ -3,10 +3,10 @@ import { CartItemRow } from "../../../features/cart/components/CartItemRow"
 import type { CartItem } from "../../../features/cart/types/cart"
 import { useCartStore } from "../../../features/cart/stores/cart.store"
 
-vi.mock("../features/cart/stores/cart.store")
+vi.mock("../../../features/cart/stores/cart.store")
 
 vi.mock(
-  "../features/cart/components/RemoveFromCartConfirmationDialog",
+  "../../../features/cart/components/RemoveFromCartConfirmationDialog",
   () => ({
     RemoveFromCartConfirmationDialog: ({
       open,

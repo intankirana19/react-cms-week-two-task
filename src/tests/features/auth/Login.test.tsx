@@ -6,7 +6,7 @@ import { useAuthStore } from "../../../features/auth/stores/auth.store";
 import { renderWithProviders } from "../../utils";
  
 
-vi.mock("../api/services/auth.service", () => ({
+vi.mock("../../../api/services/auth.service", () => ({
   authService: {
     login: vi.fn(),
     logout: vi.fn(),
