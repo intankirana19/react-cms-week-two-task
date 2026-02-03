@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { useAuthStore } from "../features/auth/stores/auth.store";
 import { renderWithProviders } from "./utils";
 import Login from "../features/auth/pages/Login";
@@ -32,5 +32,14 @@ describe("Login Page", () => {
     expect(
       screen.getByRole("button", { name: /masuk/i })
     ).toBeInTheDocument();
+  });
+
+  it("shows validation errors when submitting empty form", async () => {
+    renderWithProviders(<Login />);
+
+    fireEvent.click(screen.getByRole("button", { name: /masuk/i }));
+
+    expect(await screen.findByText("Username wajib diisi")).toBeInTheDocument();
+    expect(await screen.findByText("Password wajib diisi")).toBeInTheDocument();
   });
 });
