@@ -67,4 +67,25 @@ describe("Login Page", () => {
       })
     );
   });
+
+  it("shows server error when login fails", async () => {
+    mockAuthService.login.mockRejectedValueOnce(
+      new Error("Invalid username or password")
+    );
+
+    renderWithProviders(<Login />);
+
+    fireEvent.change(screen.getByPlaceholderText("Username"), {
+      target: { value: "wrong" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Password"), {
+      target: { value: "wrongpass" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /masuk/i }));
+
+    expect(
+      await screen.findByText("Invalid username or password")
+    ).toBeInTheDocument();
+  });
 });
