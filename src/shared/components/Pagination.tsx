@@ -12,6 +12,35 @@ export interface PaginationProps {
   className?: string;
 }
 
+const MAX_VISIBLE_PAGES = 7;
+
+const getPageNumbers = (currentPage: number, totalPages: number) => {
+  const pages: (number | string)[] = [];
+
+  if (totalPages <= MAX_VISIBLE_PAGES) {
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  pages.push(1);
+
+  if (currentPage <= 3) {
+    pages.push(2, 3, 4, '...', totalPages);
+    return pages;
+  }
+
+  if (currentPage >= totalPages - 2) {
+    pages.push('...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    return pages;
+  }
+
+  pages.push('...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+  return pages;
+};
+
+
 export function Pagination({
   currentPage,
   totalPages,
@@ -20,41 +49,6 @@ export function Pagination({
   onItemsPerPageChange,
   className,
 }: Readonly<PaginationProps>) {
-  const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
-    const showPages = 7; // Maximum number of page buttons to show
-
-    if (totalPages <= showPages) {
-      // Show all pages if total pages is less than or equal to showPages
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      // Always show first page
-      pages.push(1);
-
-      // Show pages 2, 3, 4 if current page is in first few pages
-      if (currentPage <= 3) {
-        pages.push(2, 3, 4);
-        pages.push('...');
-        pages.push(totalPages);
-      }
-      // Show last pages if current page is near the end
-      else if (currentPage >= totalPages - 2) {
-        pages.push('...');
-        pages.push(totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-      }
-      // Show pages around current page
-      else {
-        pages.push(2, 3, 4);
-        pages.push('...');
-        pages.push(totalPages - 1, totalPages);
-      }
-    }
-
-    return pages;
-  };
-
   return (
     <div
       className={cn(
@@ -87,7 +81,7 @@ export function Pagination({
       <div className="flex items-center gap-3">
         {/* Previous button */}
         <button
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => {if (currentPage > 1) {onPageChange(currentPage - 1);}}}
           disabled={currentPage === 1}
           className={cn(
             'flex items-center justify-center w-10 h-10 p-2.5 rounded-bl-lg rounded-tl-lg transition-colors',
@@ -101,9 +95,9 @@ export function Pagination({
 
         {/* Page numbers */}
         <div className="flex items-center gap-0.5">
-          {getPageNumbers().map((page, index) => (
+          {getPageNumbers(currentPage, totalPages).map((page, index) => (
             <button
-              key={index}
+              key={`${page}-${index}`}
               onClick={() => typeof page === 'number' && onPageChange(page)}
               disabled={page === '...'}
               className={cn(
