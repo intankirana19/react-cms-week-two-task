@@ -17,4 +17,18 @@ describe("Pagination", () => {
     expect(screen.getByText("Rows per page")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toBeInTheDocument()
   })
+
+  it("does not render rows per page selector when handler is missing", () => {
+    render(
+      <Pagination
+        currentPage={1}
+        totalPages={5}
+        itemsPerPage={10}
+        totalItems={50}
+        onPageChange={() => {}}
+      />
+    )
+
+    expect(screen.queryByText("Rows per page")).not.toBeInTheDocument()
+  })
 })
