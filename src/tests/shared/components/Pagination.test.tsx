@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { Pagination } from "../../../shared/components/Pagination"
 
 describe("Pagination", () => {
@@ -60,5 +60,22 @@ describe("Pagination", () => {
     const buttonsPage3 = screen.getAllByRole("button")
     expect(buttonsPage3[0]).not.toBeDisabled()
     expect(buttonsPage3[buttonsPage3.length - 1]).toBeDisabled()
+  })
+
+  it("calls onPageChange when a page number is clicked", () => {
+    const handlePageChange = vi.fn()
+
+    render(
+      <Pagination
+        currentPage={2}
+        totalPages={5}
+        itemsPerPage={10}
+        totalItems={50}
+        onPageChange={handlePageChange}
+      />
+    )
+
+    fireEvent.click(screen.getByRole("button", { name: "4" }))
+    expect(handlePageChange).toHaveBeenCalledWith(4)
   })
 })
