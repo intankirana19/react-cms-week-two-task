@@ -1,5 +1,45 @@
+import React from "react"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { Pagination } from "../../../shared/components/Pagination"
+
+vi.mock("../../../shared/components/Select", () => {
+  const Select = ({
+    value,
+    onValueChange,
+    children,
+  }: {
+    value?: string
+    onValueChange?: (value: string) => void
+    children: React.ReactNode
+  }) => (
+    <select
+      aria-label="Rows per page"
+      value={value}
+      onChange={(event) => onValueChange?.(event.target.value)}
+    >
+      {children}
+    </select>
+  )
+
+  const SelectTrigger = ({ children }: { children: React.ReactNode }) => <>{children}</>
+  const SelectValue = () => null
+  const SelectContent = ({ children }: { children: React.ReactNode }) => <>{children}</>
+  const SelectItem = ({
+    value,
+    children,
+  }: {
+    value: string
+    children: React.ReactNode
+  }) => <option value={value}>{children}</option>
+
+  return {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+  }
+})
 
 describe("Pagination", () => {
   it("renders rows per page selector when handler is provided", () => {
@@ -91,5 +131,26 @@ describe("Pagination", () => {
     )
 
     expect(screen.getByRole("button", { name: "..." })).toBeDisabled()
+  })
+
+  it("calls onItemsPerPageChange with selected value", () => {
+    const handleItemsPerPageChange = vi.fn()
+
+    render(
+      <Pagination
+        currentPage={1}
+        totalPages={5}
+        itemsPerPage={10}
+        totalItems={50}
+        onPageChange={() => {}}
+        onItemsPerPageChange={handleItemsPerPageChange}
+      />
+    )
+
+    fireEvent.change(screen.getByRole("combobox", { name: "Rows per page" }), {
+      target: { value: "20" },
+    })
+
+    expect(handleItemsPerPageChange).toHaveBeenCalledWith(20)
   })
 })
