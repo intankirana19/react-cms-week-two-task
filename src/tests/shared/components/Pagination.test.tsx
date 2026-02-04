@@ -78,4 +78,18 @@ describe("Pagination", () => {
     fireEvent.click(screen.getByRole("button", { name: "4" }))
     expect(handlePageChange).toHaveBeenCalledWith(4)
   })
+
+  it("renders disabled ellipsis for large page counts", () => {
+    render(
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        itemsPerPage={10}
+        totalItems={100}
+        onPageChange={() => {}}
+      />
+    )
+
+    expect(screen.getByRole("button", { name: "..." })).toBeDisabled()
+  })
 })
