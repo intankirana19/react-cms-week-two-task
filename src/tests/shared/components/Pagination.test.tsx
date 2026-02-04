@@ -31,4 +31,34 @@ describe("Pagination", () => {
 
     expect(screen.queryByText("Rows per page")).not.toBeInTheDocument()
   })
+
+  it("disables previous and next buttons at the boundaries", () => {
+    const { rerender } = render(
+      <Pagination
+        currentPage={1}
+        totalPages={3}
+        itemsPerPage={10}
+        totalItems={30}
+        onPageChange={() => {}}
+      />
+    )
+
+    const buttonsPage1 = screen.getAllByRole("button")
+    expect(buttonsPage1[0]).toBeDisabled()
+    expect(buttonsPage1[buttonsPage1.length - 1]).not.toBeDisabled()
+
+    rerender(
+      <Pagination
+        currentPage={3}
+        totalPages={3}
+        itemsPerPage={10}
+        totalItems={30}
+        onPageChange={() => {}}
+      />
+    )
+
+    const buttonsPage3 = screen.getAllByRole("button")
+    expect(buttonsPage3[0]).not.toBeDisabled()
+    expect(buttonsPage3[buttonsPage3.length - 1]).toBeDisabled()
+  })
 })
